@@ -1,0 +1,3357 @@
+[
+	{
+		"opcode": "0x00",
+		"name": "NOP",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": ""
+	},
+	{
+		"opcode": "0x01",
+		"name": "LXI",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			},
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "",
+		"notes": "B <- byte 3, C <- byte 2"
+	},
+	{
+		"opcode": "0x02",
+		"name": "STAX",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "",
+		"notes": "(BC) <- A"
+	},
+	{
+		"opcode": "0x03",
+		"name": "INX",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "",
+		"notes": "BC <- BC + 1"
+	},
+	{
+		"opcode": "0x04",
+		"name": "INR",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "Z, S, P, AC",
+		"notes": "B <- B + 1"
+	},
+	{
+		"opcode": "0x05",
+		"name": "DCR",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "Z, S, P, AC",
+		"notes": "B <- B - 1"
+	},
+	{
+		"opcode": "0x06",
+		"name": "MVI",
+		"size": 2,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			},
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "",
+		"notes": "B <- byte 2"
+	},
+	{
+		"opcode": "0x07",
+		"name": "RLC",
+		"size": 1,
+		"operands": [],
+		"flags": "CY",
+		"notes": "A = A << 1; bit 0 = prev bit 7; CY = prev bit 7"
+	},
+	{
+		"opcode": "0x08",
+		"name": "-",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": ""
+	},
+	{
+		"opcode": "0x09",
+		"name": "DAD",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "CY",
+		"notes": "HL = HL + BC"
+	},
+	{
+		"opcode": "0x0a",
+		"name": "LDAX",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "",
+		"notes": "A <- (BC)"
+	},
+	{
+		"opcode": "0x0b",
+		"name": "DCX",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "",
+		"notes": "BC = BC - 1"
+	},
+	{
+		"opcode": "0x0c",
+		"name": "INR",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "Z, S, P, AC",
+		"notes": "C <- C + 1"
+	},
+	{
+		"opcode": "0x0d",
+		"name": "DCR",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "Z, S, P, AC",
+		"notes": "C <- C - 1"
+	},
+	{
+		"opcode": "0x0e",
+		"name": "MVI",
+		"size": 2,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			},
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "",
+		"notes": "C <- byte 2"
+	},
+	{
+		"opcode": "0x0f",
+		"name": "RRC",
+		"size": 1,
+		"operands": [],
+		"flags": "CY",
+		"notes": "A = A >> 1; bit 7 = prev bit 0; CY = prev bit 0"
+	},
+	{
+		"opcode": "0x10",
+		"name": "-",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": ""
+	},
+	{
+		"opcode": "0x11",
+		"name": "LXI",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			},
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "",
+		"notes": "D <- byte 3, E <- byte 2"
+	},
+	{
+		"opcode": "0x12",
+		"name": "STAX",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "",
+		"notes": "(DE) <- A"
+	},
+	{
+		"opcode": "0x13",
+		"name": "INX",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "",
+		"notes": "DE <- DE + 1"
+	},
+	{
+		"opcode": "0x14",
+		"name": "INR",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "Z, S, P, AC",
+		"notes": "D <- D + 1"
+	},
+	{
+		"opcode": "0x15",
+		"name": "DCR",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "Z, S, P, AC",
+		"notes": "D <- D - 1"
+	},
+	{
+		"opcode": "0x16",
+		"name": "MVI",
+		"size": 2,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			},
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "",
+		"notes": "D <- byte 2"
+	},
+	{
+		"opcode": "0x17",
+		"name": "RAL",
+		"size": 1,
+		"operands": [],
+		"flags": "CY",
+		"notes": "A = A << 1; bit 0 = prev CY; CY = prev bit 7"
+	},
+	{
+		"opcode": "0x18",
+		"name": "-",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": ""
+	},
+	{
+		"opcode": "0x19",
+		"name": "DAD",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "CY",
+		"notes": "HL = HL + DE"
+	},
+	{
+		"opcode": "0x1a",
+		"name": "LDAX",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "",
+		"notes": "A <- (DE)"
+	},
+	{
+		"opcode": "0x1b",
+		"name": "DCX",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "",
+		"notes": "DE = DE - 1"
+	},
+	{
+		"opcode": "0x1c",
+		"name": "INR",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			}
+		],
+		"flags": "Z, S, P, AC",
+		"notes": "E <- E + 1"
+	},
+	{
+		"opcode": "0x1d",
+		"name": "DCR",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			}
+		],
+		"flags": "Z, S, P, AC",
+		"notes": "E <- E - 1"
+	},
+	{
+		"opcode": "0x1e",
+		"name": "MVI",
+		"size": 2,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			},
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "",
+		"notes": "E <- byte 2"
+	},
+	{
+		"opcode": "0x1f",
+		"name": "RAR",
+		"size": 1,
+		"operands": [],
+		"flags": "CY",
+		"notes": "A = A >> 1; bit 7 = prev bit 7; CY = prev bit 0"
+	},
+	{
+		"opcode": "0x20",
+		"name": "RIM",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "special"
+	},
+	{
+		"opcode": "0x21",
+		"name": "LXI",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			},
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "",
+		"notes": "H <- byte 3, L <- byte 2"
+	},
+	{
+		"opcode": "0x22",
+		"name": "SHLD",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "(adr) <- L; (adr + 1) <- H"
+	},
+	{
+		"opcode": "0x23",
+		"name": "INX",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "",
+		"notes": "HL <- HL + 1"
+	},
+	{
+		"opcode": "0x24",
+		"name": "INR",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "Z, S, P, AC",
+		"notes": "H <- H + 1"
+	},
+	{
+		"opcode": "0x25",
+		"name": "DCR",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "Z, S, P, AC",
+		"notes": "H <- H - 1"
+	},
+	{
+		"opcode": "0x26",
+		"name": "MVI",
+		"size": 2,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			},
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "",
+		"notes": "H <- byte 2"
+	},
+	{
+		"opcode": "0x27",
+		"name": "DAA",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "special"
+	},
+	{
+		"opcode": "0x28",
+		"name": "-",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": ""
+	},
+	{
+		"opcode": "0x29",
+		"name": "DAD",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "CY",
+		"notes": "HL = HL + HI"
+	},
+	{
+		"opcode": "0x2a",
+		"name": "LHLD",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "L <- (adr); H <- (adr + 1)"
+	},
+	{
+		"opcode": "0x2b",
+		"name": "DCX",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "",
+		"notes": "HL = HL - 1"
+	},
+	{
+		"opcode": "0x2c",
+		"name": "INR",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			}
+		],
+		"flags": "Z, S, P, AC",
+		"notes": "L <- L + 1"
+	},
+	{
+		"opcode": "0x2d",
+		"name": "DCR",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			}
+		],
+		"flags": "Z, S, P, AC",
+		"notes": "L <- L - 1"
+	},
+	{
+		"opcode": "0x2e",
+		"name": "MVI",
+		"size": 2,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			},
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "",
+		"notes": "L <- byte 2"
+	},
+	{
+		"opcode": "0x2f",
+		"name": "CMA",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "A <- !A"
+	},
+	{
+		"opcode": "0x30",
+		"name": "SIM",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "special"
+	},
+	{
+		"opcode": "0x31",
+		"name": "LXI",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "SP"
+			},
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "",
+		"notes": "SP.hi <- byte 3, SP.lo <- byte 2"
+	},
+	{
+		"opcode": "0x32",
+		"name": "STA",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "(adr) <- A"
+	},
+	{
+		"opcode": "0x33",
+		"name": "INX",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "SP"
+			}
+		],
+		"flags": "",
+		"notes": "SP <- SP + 1"
+	},
+	{
+		"opcode": "0x34",
+		"name": "INR",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "M"
+			}
+		],
+		"flags": "Z, S, P, AC",
+		"notes": "(HL) <- (HL) + 1"
+	},
+	{
+		"opcode": "0x35",
+		"name": "DCR",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "M"
+			}
+		],
+		"flags": "Z, S, P, AC",
+		"notes": "(HL) <- (HL) - 1"
+	},
+	{
+		"opcode": "0x36",
+		"name": "MVI",
+		"size": 2,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "M"
+			},
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "",
+		"notes": "(HL) <- byte 2"
+	},
+	{
+		"opcode": "0x37",
+		"name": "STC",
+		"size": 1,
+		"operands": [],
+		"flags": "CY",
+		"notes": "CY = 1"
+	},
+	{
+		"opcode": "0x38",
+		"name": "-",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": ""
+	},
+	{
+		"opcode": "0x39",
+		"name": "DAD",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "SP"
+			}
+		],
+		"flags": "CY",
+		"notes": "HL = HL + SP"
+	},
+	{
+		"opcode": "0x3a",
+		"name": "LDA",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "A <- (adr)"
+	},
+	{
+		"opcode": "0x3b",
+		"name": "DCX",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "SP"
+			}
+		],
+		"flags": "",
+		"notes": "SP <- SP - 1"
+	},
+	{
+		"opcode": "0x3c",
+		"name": "INR",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			}
+		],
+		"flags": "Z, S, P, AC",
+		"notes": "A <- A + 1"
+	},
+	{
+		"opcode": "0x3d",
+		"name": "DCR",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			}
+		],
+		"flags": "Z, S, P, AC",
+		"notes": "A <- A - 1"
+	},
+	{
+		"opcode": "0x3e",
+		"name": "MVI",
+		"size": 2,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			},
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "",
+		"notes": "A <- byte 2"
+	},
+	{
+		"opcode": "0x3f",
+		"name": "CMC",
+		"size": 1,
+		"operands": [],
+		"flags": "CY",
+		"notes": "CY = !CY"
+	},
+	{
+		"opcode": "0x40",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			},
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "",
+		"notes": "B <- B"
+	},
+	{
+		"opcode": "0x41",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			},
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "",
+		"notes": "B <- C"
+	},
+	{
+		"opcode": "0x42",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			},
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "",
+		"notes": "B <- D"
+	},
+	{
+		"opcode": "0x43",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			},
+			{
+				"type": "Register",
+				"value": "E"
+			}
+		],
+		"flags": "",
+		"notes": "B <- E"
+	},
+	{
+		"opcode": "0x44",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			},
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "",
+		"notes": "B <- H"
+	},
+	{
+		"opcode": "0x45",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			},
+			{
+				"type": "Register",
+				"value": "L"
+			}
+		],
+		"flags": "",
+		"notes": "B <- L"
+	},
+	{
+		"opcode": "0x46",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			},
+			{
+				"type": "Register",
+				"value": "M"
+			}
+		],
+		"flags": "",
+		"notes": "B <- (HL)"
+	},
+	{
+		"opcode": "0x47",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			},
+			{
+				"type": "Register",
+				"value": "A"
+			}
+		],
+		"flags": "",
+		"notes": "B <- A"
+	},
+	{
+		"opcode": "0x48",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			},
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "",
+		"notes": "C <- B"
+	},
+	{
+		"opcode": "0x49",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			},
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "",
+		"notes": "C <- C"
+	},
+	{
+		"opcode": "0x4a",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			},
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "",
+		"notes": "C <- D"
+	},
+	{
+		"opcode": "0x4b",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			},
+			{
+				"type": "Register",
+				"value": "E"
+			}
+		],
+		"flags": "",
+		"notes": "C <- E"
+	},
+	{
+		"opcode": "0x4c",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			},
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "",
+		"notes": "C <- H"
+	},
+	{
+		"opcode": "0x4d",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			},
+			{
+				"type": "Register",
+				"value": "L"
+			}
+		],
+		"flags": "",
+		"notes": "C <- L"
+	},
+	{
+		"opcode": "0x4e",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			},
+			{
+				"type": "Register",
+				"value": "M"
+			}
+		],
+		"flags": "",
+		"notes": "C <- (HL)"
+	},
+	{
+		"opcode": "0x4f",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			},
+			{
+				"type": "Register",
+				"value": "A"
+			}
+		],
+		"flags": "",
+		"notes": "C <- A"
+	},
+	{
+		"opcode": "0x50",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			},
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "",
+		"notes": "D <- B"
+	},
+	{
+		"opcode": "0x51",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			},
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "",
+		"notes": "D <- C"
+	},
+	{
+		"opcode": "0x52",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			},
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "",
+		"notes": "D <- D"
+	},
+	{
+		"opcode": "0x53",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			},
+			{
+				"type": "Register",
+				"value": "E"
+			}
+		],
+		"flags": "",
+		"notes": "D <- E"
+	},
+	{
+		"opcode": "0x54",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			},
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "",
+		"notes": "D <- H"
+	},
+	{
+		"opcode": "0x55",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			},
+			{
+				"type": "Register",
+				"value": "L"
+			}
+		],
+		"flags": "",
+		"notes": "D <- L"
+	},
+	{
+		"opcode": "0x56",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			},
+			{
+				"type": "Register",
+				"value": "M"
+			}
+		],
+		"flags": "",
+		"notes": "D <- (HL)"
+	},
+	{
+		"opcode": "0x57",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			},
+			{
+				"type": "Register",
+				"value": "A"
+			}
+		],
+		"flags": "",
+		"notes": "D <- A"
+	},
+	{
+		"opcode": "0x58",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			},
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "",
+		"notes": "E <- B"
+	},
+	{
+		"opcode": "0x59",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			},
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "",
+		"notes": "E <- C"
+	},
+	{
+		"opcode": "0x5a",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			},
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "",
+		"notes": "E <- D"
+	},
+	{
+		"opcode": "0x5b",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			},
+			{
+				"type": "Register",
+				"value": "E"
+			}
+		],
+		"flags": "",
+		"notes": "E <- E"
+	},
+	{
+		"opcode": "0x5c",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			},
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "",
+		"notes": "E <- H"
+	},
+	{
+		"opcode": "0x5d",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			},
+			{
+				"type": "Register",
+				"value": "L"
+			}
+		],
+		"flags": "",
+		"notes": "E <- L"
+	},
+	{
+		"opcode": "0x5e",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			},
+			{
+				"type": "Register",
+				"value": "M"
+			}
+		],
+		"flags": "",
+		"notes": "E <- (HL)"
+	},
+	{
+		"opcode": "0x5f",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			},
+			{
+				"type": "Register",
+				"value": "A"
+			}
+		],
+		"flags": "",
+		"notes": "E <- A"
+	},
+	{
+		"opcode": "0x60",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			},
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "",
+		"notes": "H <- B"
+	},
+	{
+		"opcode": "0x61",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			},
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "",
+		"notes": "H <- C"
+	},
+	{
+		"opcode": "0x62",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			},
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "",
+		"notes": "H <- D"
+	},
+	{
+		"opcode": "0x63",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			},
+			{
+				"type": "Register",
+				"value": "E"
+			}
+		],
+		"flags": "",
+		"notes": "H <- E"
+	},
+	{
+		"opcode": "0x64",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			},
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "",
+		"notes": "H <- H"
+	},
+	{
+		"opcode": "0x65",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			},
+			{
+				"type": "Register",
+				"value": "L"
+			}
+		],
+		"flags": "",
+		"notes": "H <- L"
+	},
+	{
+		"opcode": "0x66",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			},
+			{
+				"type": "Register",
+				"value": "M"
+			}
+		],
+		"flags": "",
+		"notes": "H <- (HL)"
+	},
+	{
+		"opcode": "0x67",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			},
+			{
+				"type": "Register",
+				"value": "A"
+			}
+		],
+		"flags": "",
+		"notes": "H <- A"
+	},
+	{
+		"opcode": "0x68",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			},
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "",
+		"notes": "L <- B"
+	},
+	{
+		"opcode": "0x69",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			},
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "",
+		"notes": "L <- C"
+	},
+	{
+		"opcode": "0x6a",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			},
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "",
+		"notes": "L <- D"
+	},
+	{
+		"opcode": "0x6b",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			},
+			{
+				"type": "Register",
+				"value": "E"
+			}
+		],
+		"flags": "",
+		"notes": "L <- E"
+	},
+	{
+		"opcode": "0x6c",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			},
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "",
+		"notes": "L <- H"
+	},
+	{
+		"opcode": "0x6d",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			},
+			{
+				"type": "Register",
+				"value": "L"
+			}
+		],
+		"flags": "",
+		"notes": "L <- L"
+	},
+	{
+		"opcode": "0x6e",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			},
+			{
+				"type": "Register",
+				"value": "M"
+			}
+		],
+		"flags": "",
+		"notes": "L <- (HL)"
+	},
+	{
+		"opcode": "0x6f",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			},
+			{
+				"type": "Register",
+				"value": "A"
+			}
+		],
+		"flags": "",
+		"notes": "L <- A"
+	},
+	{
+		"opcode": "0x70",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "M"
+			},
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "",
+		"notes": "(HL) <- B"
+	},
+	{
+		"opcode": "0x71",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "M"
+			},
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "",
+		"notes": "(HL) <- C"
+	},
+	{
+		"opcode": "0x72",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "M"
+			},
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "",
+		"notes": "(HL) <- D"
+	},
+	{
+		"opcode": "0x73",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "M"
+			},
+			{
+				"type": "Register",
+				"value": "E"
+			}
+		],
+		"flags": "",
+		"notes": "(HL) <- E"
+	},
+	{
+		"opcode": "0x74",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "M"
+			},
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "",
+		"notes": "(HL) <- H"
+	},
+	{
+		"opcode": "0x75",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "M"
+			},
+			{
+				"type": "Register",
+				"value": "L"
+			}
+		],
+		"flags": "",
+		"notes": "(HL) <- L"
+	},
+	{
+		"opcode": "0x76",
+		"name": "HLT",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "special"
+	},
+	{
+		"opcode": "0x77",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "M"
+			},
+			{
+				"type": "Register",
+				"value": "A"
+			}
+		],
+		"flags": "",
+		"notes": "(HL) <- A"
+	},
+	{
+		"opcode": "0x78",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			},
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "",
+		"notes": "A <- B"
+	},
+	{
+		"opcode": "0x79",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			},
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "",
+		"notes": "A <- C"
+	},
+	{
+		"opcode": "0x7a",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			},
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "",
+		"notes": "A <- D"
+	},
+	{
+		"opcode": "0x7b",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			},
+			{
+				"type": "Register",
+				"value": "E"
+			}
+		],
+		"flags": "",
+		"notes": "A <- E"
+	},
+	{
+		"opcode": "0x7c",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			},
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "",
+		"notes": "A <- H"
+	},
+	{
+		"opcode": "0x7d",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			},
+			{
+				"type": "Register",
+				"value": "L"
+			}
+		],
+		"flags": "",
+		"notes": "A <- L"
+	},
+	{
+		"opcode": "0x7e",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			},
+			{
+				"type": "Register",
+				"value": "M"
+			}
+		],
+		"flags": "",
+		"notes": "A <- (HL)"
+	},
+	{
+		"opcode": "0x7f",
+		"name": "MOV",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			},
+			{
+				"type": "Register",
+				"value": "A"
+			}
+		],
+		"flags": "",
+		"notes": "A <- A"
+	},
+	{
+		"opcode": "0x80",
+		"name": "ADD",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + B"
+	},
+	{
+		"opcode": "0x81",
+		"name": "ADD",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + C"
+	},
+	{
+		"opcode": "0x82",
+		"name": "ADD",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + D"
+	},
+	{
+		"opcode": "0x83",
+		"name": "ADD",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + E"
+	},
+	{
+		"opcode": "0x84",
+		"name": "ADD",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + H"
+	},
+	{
+		"opcode": "0x85",
+		"name": "ADD",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + L"
+	},
+	{
+		"opcode": "0x86",
+		"name": "ADD",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "M"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + (HL)"
+	},
+	{
+		"opcode": "0x87",
+		"name": "ADD",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + A"
+	},
+	{
+		"opcode": "0x88",
+		"name": "ADC",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + B + CY"
+	},
+	{
+		"opcode": "0x89",
+		"name": "ADC",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + C + CY"
+	},
+	{
+		"opcode": "0x8a",
+		"name": "ADC",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + D + CY"
+	},
+	{
+		"opcode": "0x8b",
+		"name": "ADC",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + E + CY"
+	},
+	{
+		"opcode": "0x8c",
+		"name": "ADC",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + H + CY"
+	},
+	{
+		"opcode": "0x8d",
+		"name": "ADC",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + L + CY"
+	},
+	{
+		"opcode": "0x8e",
+		"name": "ADC",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "M"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + (HL) + CY"
+	},
+	{
+		"opcode": "0x8f",
+		"name": "ADC",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + A + CY"
+	},
+	{
+		"opcode": "0x90",
+		"name": "SUB",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A - B"
+	},
+	{
+		"opcode": "0x91",
+		"name": "SUB",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A - C"
+	},
+	{
+		"opcode": "0x92",
+		"name": "SUB",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + D"
+	},
+	{
+		"opcode": "0x93",
+		"name": "SUB",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A - E"
+	},
+	{
+		"opcode": "0x94",
+		"name": "SUB",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + H"
+	},
+	{
+		"opcode": "0x95",
+		"name": "SUB",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A - L"
+	},
+	{
+		"opcode": "0x96",
+		"name": "SUB",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "M"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + (HL)"
+	},
+	{
+		"opcode": "0x97",
+		"name": "SUB",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A - A"
+	},
+	{
+		"opcode": "0x98",
+		"name": "SBB",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A - B - CY"
+	},
+	{
+		"opcode": "0x99",
+		"name": "SBB",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A - C - CY"
+	},
+	{
+		"opcode": "0x9a",
+		"name": "SBB",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A - D - CY"
+	},
+	{
+		"opcode": "0x9b",
+		"name": "SBB",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A - E - CY"
+	},
+	{
+		"opcode": "0x9c",
+		"name": "SBB",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A - H - CY"
+	},
+	{
+		"opcode": "0x9d",
+		"name": "SBB",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A - L - CY"
+	},
+	{
+		"opcode": "0x9e",
+		"name": "SBB",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "M"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A - (HL) - CY"
+	},
+	{
+		"opcode": "0x9f",
+		"name": "SBB",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A - A - CY"
+	},
+	{
+		"opcode": "0xa0",
+		"name": "ANA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A & B"
+	},
+	{
+		"opcode": "0xa1",
+		"name": "ANA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A & C"
+	},
+	{
+		"opcode": "0xa2",
+		"name": "ANA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A & D"
+	},
+	{
+		"opcode": "0xa3",
+		"name": "ANA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A & E"
+	},
+	{
+		"opcode": "0xa4",
+		"name": "ANA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A & H"
+	},
+	{
+		"opcode": "0xa5",
+		"name": "ANA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A & L"
+	},
+	{
+		"opcode": "0xa6",
+		"name": "ANA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "M"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A & (HL)"
+	},
+	{
+		"opcode": "0xa7",
+		"name": "ANA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A & A"
+	},
+	{
+		"opcode": "0xa8",
+		"name": "XRA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A ^ B"
+	},
+	{
+		"opcode": "0xa9",
+		"name": "XRA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A ^ C"
+	},
+	{
+		"opcode": "0xaa",
+		"name": "XRA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A ^ D"
+	},
+	{
+		"opcode": "0xab",
+		"name": "XRA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A ^ E"
+	},
+	{
+		"opcode": "0xac",
+		"name": "XRA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A ^ H"
+	},
+	{
+		"opcode": "0xad",
+		"name": "XRA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A ^ L"
+	},
+	{
+		"opcode": "0xae",
+		"name": "XRA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "M"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A ^ (HL)"
+	},
+	{
+		"opcode": "0xaf",
+		"name": "XRA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A ^ A"
+	},
+	{
+		"opcode": "0xb0",
+		"name": "ORA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A | B"
+	},
+	{
+		"opcode": "0xb1",
+		"name": "ORA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A | C"
+	},
+	{
+		"opcode": "0xb2",
+		"name": "ORA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A | D"
+	},
+	{
+		"opcode": "0xb3",
+		"name": "ORA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A | E"
+	},
+	{
+		"opcode": "0xb4",
+		"name": "ORA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A | H"
+	},
+	{
+		"opcode": "0xb5",
+		"name": "ORA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A | L"
+	},
+	{
+		"opcode": "0xb6",
+		"name": "ORA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "M"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A | (HL)"
+	},
+	{
+		"opcode": "0xb7",
+		"name": "ORA",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A | A"
+	},
+	{
+		"opcode": "0xb8",
+		"name": "CMP",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A - B"
+	},
+	{
+		"opcode": "0xb9",
+		"name": "CMP",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "C"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A - C"
+	},
+	{
+		"opcode": "0xba",
+		"name": "CMP",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A - D"
+	},
+	{
+		"opcode": "0xbb",
+		"name": "CMP",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "E"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A - E"
+	},
+	{
+		"opcode": "0xbc",
+		"name": "CMP",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A - H"
+	},
+	{
+		"opcode": "0xbd",
+		"name": "CMP",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "L"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A - L"
+	},
+	{
+		"opcode": "0xbe",
+		"name": "CMP",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "M"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A - (HL)"
+	},
+	{
+		"opcode": "0xbf",
+		"name": "CMP",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "A"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A - A"
+	},
+	{
+		"opcode": "0xc0",
+		"name": "RNZ",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "if NZ, RET"
+	},
+	{
+		"opcode": "0xc1",
+		"name": "POP",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "",
+		"notes": "C <- (sp); B <- (sp + 1); sp <- sp + 2"
+	},
+	{
+		"opcode": "0xc2",
+		"name": "JNZ",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "if NZ, PC <- adr"
+	},
+	{
+		"opcode": "0xc3",
+		"name": "JMP",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "PC <= adr"
+	},
+	{
+		"opcode": "0xc4",
+		"name": "CNZ",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "if NZ, CALL adr"
+	},
+	{
+		"opcode": "0xc5",
+		"name": "PUSH",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "B"
+			}
+		],
+		"flags": "",
+		"notes": "(sp - 2) <- C; (sp - 1) <- B; sp <- sp - 2"
+	},
+	{
+		"opcode": "0xc6",
+		"name": "ADI",
+		"size": 2,
+		"operands": [
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + byte"
+	},
+	{
+		"opcode": "0xc7",
+		"name": "RST0",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "CALL $0"
+	},
+	{
+		"opcode": "0xc8",
+		"name": "RZ",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "if Z, RET"
+	},
+	{
+		"opcode": "0xc9",
+		"name": "RET",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "PC.lo <- (sp); PC.hi <- (sp + 1); SP <- SP + 2"
+	},
+	{
+		"opcode": "0xca",
+		"name": "JZ",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "if Z, PC <- adr"
+	},
+	{
+		"opcode": "0xcb",
+		"name": "-",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": ""
+	},
+	{
+		"opcode": "0xcc",
+		"name": "CZ",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "if Z, CALL adr"
+	},
+	{
+		"opcode": "0xcd",
+		"name": "CALL",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "(SP - 1) <- PC.hi; (SP - 2) <- PC.lo; SP <- SP + 2; PC <- adr"
+	},
+	{
+		"opcode": "0xce",
+		"name": "ACI",
+		"size": 2,
+		"operands": [
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A + data + CY"
+	},
+	{
+		"opcode": "0xcf",
+		"name": "RST1",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "CALL $8"
+	},
+	{
+		"opcode": "0xd0",
+		"name": "RNC",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "if NCY, RET"
+	},
+	{
+		"opcode": "0xd1",
+		"name": "POP",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "",
+		"notes": "E <- (sp); D <- (sp + 1); sp <- sp + 2"
+	},
+	{
+		"opcode": "0xd2",
+		"name": "JNC",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "if NCY, PC <- adr"
+	},
+	{
+		"opcode": "0xd3",
+		"name": "OUT",
+		"size": 2,
+		"operands": [
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "",
+		"notes": "special"
+	},
+	{
+		"opcode": "0xd4",
+		"name": "CNC",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "if NCY, CALL adr"
+	},
+	{
+		"opcode": "0xd5",
+		"name": "PUSH",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "D"
+			}
+		],
+		"flags": "",
+		"notes": "(sp - 2) <- E; (sp - 1) <- D; sp <- sp - 2"
+	},
+	{
+		"opcode": "0xd6",
+		"name": "SUI",
+		"size": 2,
+		"operands": [
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A - data"
+	},
+	{
+		"opcode": "0xd7",
+		"name": "RST2",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "CALL $10"
+	},
+	{
+		"opcode": "0xd8",
+		"name": "RC",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "if CY, RET"
+	},
+	{
+		"opcode": "0xd9",
+		"name": "-",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": ""
+	},
+	{
+		"opcode": "0xda",
+		"name": "JC",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "if CY, PC <- adr"
+	},
+	{
+		"opcode": "0xdb",
+		"name": "IN",
+		"size": 2,
+		"operands": [
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "",
+		"notes": "special"
+	},
+	{
+		"opcode": "0xdc",
+		"name": "CC",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "if CY, CALL adr"
+	},
+	{
+		"opcode": "0xdd",
+		"name": "-",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": ""
+	},
+	{
+		"opcode": "0xde",
+		"name": "SBI",
+		"size": 2,
+		"operands": [
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A - data - CY"
+	},
+	{
+		"opcode": "0xdf",
+		"name": "RST3",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "CALL $18"
+	},
+	{
+		"opcode": "0xe0",
+		"name": "RPO",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "if PO, RET"
+	},
+	{
+		"opcode": "0xe1",
+		"name": "POP",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "",
+		"notes": "L <- (sp); H <- (sp + 1); sp <- sp + 2"
+	},
+	{
+		"opcode": "0xe2",
+		"name": "JPO",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "if PO, PC <- adr"
+	},
+	{
+		"opcode": "0xe3",
+		"name": "XTHL",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "L <-> (SP); H <-> (SP + 1)"
+	},
+	{
+		"opcode": "0xe4",
+		"name": "CPO",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "if PO, CALL adr"
+	},
+	{
+		"opcode": "0xe5",
+		"name": "PUSH",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "H"
+			}
+		],
+		"flags": "",
+		"notes": "(sp - 2) <- L; (sp - 1) <- H; sp <- sp - 2"
+	},
+	{
+		"opcode": "0xe6",
+		"name": "ANI",
+		"size": 2,
+		"operands": [
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A & data"
+	},
+	{
+		"opcode": "0xe7",
+		"name": "RST4",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "CALL $20"
+	},
+	{
+		"opcode": "0xe8",
+		"name": "RPE",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "if PE, RET"
+	},
+	{
+		"opcode": "0xe9",
+		"name": "PCHL",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "PC.hi <- H; PC.lo <- L"
+	},
+	{
+		"opcode": "0xea",
+		"name": "JPE",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "if PE, PC <- adr"
+	},
+	{
+		"opcode": "0xeb",
+		"name": "XCHG",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "H <-> D; L <-> E"
+	},
+	{
+		"opcode": "0xec",
+		"name": "CPE",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "if PE, CALL adr"
+	},
+	{
+		"opcode": "0xed",
+		"name": "-",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": ""
+	},
+	{
+		"opcode": "0xee",
+		"name": "XRI",
+		"size": 2,
+		"operands": [
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A ^ data"
+	},
+	{
+		"opcode": "0xef",
+		"name": "RST5",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "CALL $28"
+	},
+	{
+		"opcode": "0xf0",
+		"name": "RP",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "if P, RET"
+	},
+	{
+		"opcode": "0xf1",
+		"name": "POP",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "PSW"
+			}
+		],
+		"flags": "",
+		"notes": "flags <- (sp); A <- (sp+1); sp <- sp + 2"
+	},
+	{
+		"opcode": "0xf2",
+		"name": "JP",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "if P == 1 PC <- adr"
+	},
+	{
+		"opcode": "0xf3",
+		"name": "DI",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "special"
+	},
+	{
+		"opcode": "0xf4",
+		"name": "CP",
+		"size": 3,
+		"operands": [],
+		"flags": "",
+		"notes": "if P, PC <- adr"
+	},
+	{
+		"opcode": "0xf5",
+		"name": "PUSH",
+		"size": 1,
+		"operands": [
+			{
+				"type": "Register",
+				"value": "PSW"
+			}
+		],
+		"flags": "",
+		"notes": "(sp-2) <- flags; (sp-1) <- A; sp <- sp - 2"
+	},
+	{
+		"opcode": "0xf6",
+		"name": "ORI",
+		"size": 2,
+		"operands": [
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A <- A | data"
+	},
+	{
+		"opcode": "0xf7",
+		"name": "RST6",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "CALL $30"
+	},
+	{
+		"opcode": "0xf8",
+		"name": "RM",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "if M, RET"
+	},
+	{
+		"opcode": "0xf9",
+		"name": "SPHL",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "SP == HL"
+	},
+	{
+		"opcode": "0xfa",
+		"name": "JM",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "if M, PC <- adr"
+	},
+	{
+		"opcode": "0xfb",
+		"name": "EI",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "special"
+	},
+	{
+		"opcode": "0xfc",
+		"name": "CM",
+		"size": 3,
+		"operands": [
+			{
+				"type": "Address"
+			}
+		],
+		"flags": "",
+		"notes": "if M, CALL adr"
+	},
+	{
+		"opcode": "0xfd",
+		"name": "-",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": ""
+	},
+	{
+		"opcode": "0xfe",
+		"name": "CPI",
+		"size": 2,
+		"operands": [
+			{
+				"type": "Immediate"
+			}
+		],
+		"flags": "Z, S, P, CY, AC",
+		"notes": "A - data"
+	},
+	{
+		"opcode": "0xff",
+		"name": "RST7",
+		"size": 1,
+		"operands": [],
+		"flags": "",
+		"notes": "CALL $38"
+	}
+]
