@@ -41,7 +41,7 @@ impl ISA {
             _ => unreachable!(),
         };
 
-        Some(Instruction { description, data })
+        Some(Instruction { opcode, data })
     }
 }
 
@@ -83,17 +83,17 @@ pub enum OperandType {
 
 /// A decoded instruction, including any immediate data associated with it.
 #[derive(Debug)]
-pub struct Instruction<'a> {
+pub struct Instruction {
     // General description of the decoded instruction
-    pub description: &'a OpcodeDescription,
+    pub opcode: u8,
     // Immediate data associated with the instruction, if any
     pub data: Option<u16>,
 }
 
-impl<'a> Instruction<'a> {
+impl Instruction {
     /// Format a disassembled instruction in a human-readable format.
-    pub fn format(&self, verbose: bool) -> String {
-        let desc = self.description;
+    pub fn format(&self, isa: &ISA, verbose: bool) -> Result<String, Box<Error>> {
+        let desc = isa.get_description(self.opcode).ok_or("invalid opcode")?;
 
         let mut formatted = format!(
             "{:<8}{:<16}",
@@ -115,6 +115,6 @@ impl<'a> Instruction<'a> {
             formatted.push_str(&desc.notes);
         }
 
-        formatted
+        Ok(formatted)
     }
 }

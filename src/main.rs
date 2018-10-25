@@ -7,7 +7,6 @@ extern crate serde_json;
 mod cpu;
 mod isa;
 mod memory;
-mod opcodes;
 
 use isa::*;
 
@@ -50,7 +49,8 @@ fn disassemble(memmap: &memory::MemoryMap, isa: &ISA) -> Result<(), String> {
     while pc < 0x2000 {
         let opcode = memmap.load_u8(pc);
         let instr = isa.decode(opcode, pc, memmap).ok_or("invalid opcode")?;
-        let size = instr.description.size;
+        let desc = isa.get_description(opcode).ok_or("invalid opcode")?;
+        let size = desc.size;
 
         println!(
             "{:04x}  {:<8}  {}",
@@ -61,7 +61,7 @@ fn disassemble(memmap: &memory::MemoryMap, isa: &ISA) -> Result<(), String> {
                 .map(|&loc| format!("{:02x}", memmap.load_u8(loc)))
                 .collect::<Vec<_>>()
                 .join(" "),
-            instr.format(false),
+            instr.format(isa, false).unwrap(),
         );
 
         pc = pc + size as u16;
