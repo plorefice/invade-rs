@@ -2,6 +2,8 @@ use std::collections::HashMap;
 use std::error::Error;
 use std::io::Read;
 
+use memory::MemoryMap;
+
 use serde::{Deserialize, Deserializer};
 use serde_json;
 
@@ -29,25 +31,17 @@ impl ISA {
 
     /// Decode an opcode and obtain the related Instruction by decoding bytes from mem.
     /// mem should be big enough to decode the instruction, otherwise decoding will fail.
-    pub fn decode(&self, opcode: u8, mem: &[u8]) -> Option<Instruction> {
-        let desc = self.get_description(opcode)?;
+    pub fn decode(&self, opcode: u8, pc: u16, memmap: &MemoryMap) -> Option<Instruction> {
+        let description = self.get_description(opcode)?;
 
-        if mem.len() < desc.size {
-            None
-        } else {
-            Some(match desc.size {
-                1 => Instruction { desc, imm: None },
-                2 => Instruction {
-                    desc,
-                    imm: Some(mem[1] as u16),
-                },
-                3 => Instruction {
-                    desc,
-                    imm: Some(((mem[2] as u16) << 8) | mem[1] as u16),
-                },
-                _ => unreachable!(),
-            })
-        }
+        let data = match description.size {
+            1 => None,
+            2 => Some(memmap.load_u8(pc + 1) as u16),
+            3 => Some(memmap.load_u16(pc + 1)),
+            _ => unreachable!(),
+        };
+
+        Some(Instruction { description, data })
     }
 }
 
@@ -90,14 +84,16 @@ pub enum OperandType {
 /// A decoded instruction, including any immediate data associated with it.
 #[derive(Debug)]
 pub struct Instruction<'a> {
-    pub desc: &'a OpcodeDescription,
-    pub imm: Option<u16>,
+    // General description of the decoded instruction
+    pub description: &'a OpcodeDescription,
+    // Immediate data associated with the instruction, if any
+    pub data: Option<u16>,
 }
 
 impl<'a> Instruction<'a> {
     /// Format a disassembled instruction in a human-readable format.
     pub fn format(&self, verbose: bool) -> String {
-        let desc = self.desc;
+        let desc = self.description;
 
         let mut formatted = format!(
             "{:<8}{:<16}",
@@ -107,8 +103,8 @@ impl<'a> Instruction<'a> {
                 .iter()
                 .map(|op| match op {
                     OperandType::Register(r) => r.clone(),
-                    OperandType::Immediate => format!("#0x{:04x}", self.imm.unwrap()),
-                    OperandType::Address => format!("${:04x}", self.imm.unwrap()),
+                    OperandType::Immediate => format!("#0x{:04x}", self.data.unwrap()),
+                    OperandType::Address => format!("${:04x}", self.data.unwrap()),
                 })
                 .collect::<Vec<_>>()
                 .join(", ")

@@ -31,39 +31,40 @@ fn main() {
     }
 
     // Create processor and start executing
-    let mut cpu = cpu::CPU::new(isa, memmap);
+    // let mut cpu = cpu::CPU::new(isa, memmap);
+    // loop {
+    //     cpu.step()
+    // }
 
-    loop {
-        cpu.step()
-    }
+    disassemble(&memmap, &isa).expect("error disassembling");
 }
 
 fn load_rom(fname: &str) -> Result<Vec<u8>, io::Error> {
     File::open(fname)?.bytes().collect()
 }
 
-fn disassemble(rom: &[u8], isa: &ISA) -> Result<(), String> {
-    let mut i = 0;
+fn disassemble(memmap: &memory::MemoryMap, isa: &ISA) -> Result<(), String> {
+    let mut pc = 0;
 
-    while i < rom.len() {
-        let opcode = rom[i];
-        let instr = isa
-            .decode(opcode, &rom[i..])
-            .ok_or("error decoding opcode")?;
-        let size = instr.desc.size;
+    // Loop over the rom size
+    while pc < 0x2000 {
+        let opcode = memmap.load_u8(pc);
+        let instr = isa.decode(opcode, pc, memmap).ok_or("invalid opcode")?;
+        let size = instr.description.size;
 
         println!(
             "{:04x}  {:<8}  {}",
-            i,
-            rom[i..i + size]
-                .into_iter()
-                .map(|&n| format!("{:02x}", n))
+            pc,
+            (pc..pc + size as u16)
+                .collect::<Vec<_>>()
+                .iter()
+                .map(|&loc| format!("{:02x}", memmap.load_u8(loc)))
                 .collect::<Vec<_>>()
                 .join(" "),
             instr.format(false),
         );
 
-        i = i + size;
+        pc = pc + size as u16;
     }
 
     Ok(())
