@@ -4,7 +4,10 @@ extern crate serde_derive;
 extern crate serde;
 extern crate serde_json;
 
+mod cpu;
 mod isa;
+mod memory;
+
 use isa::*;
 
 use std::env;
