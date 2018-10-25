@@ -1,8 +1,9 @@
 use isa::ISA;
 use memory::MemoryMap;
+use opcodes::*;
 
 /// The current state of the 8080 CPU.
-struct CPU {
+pub struct CPU {
     /// A snapshot of the CPU state flags at a point in time
     pub flags: Flags,
     /// The CPU general-purpose registers
@@ -35,18 +36,19 @@ impl CPU {
 
     pub fn step(&mut self) {
         let opc = self.mem.load_u8(self.pc);
-        let instr = self.isa.get_description(opc).unwrap();
 
-        // TODO: actually execute instruction
-
-        self.pc = self.pc + instr.size as u16;
+        // TODO: find a nicer way to register opcode execution functions
+        match opc {
+            0 => nop(),
+            _ => unimplemented_instruction(),
+        };
     }
 }
 
 /// Internal flag bits (status register) of the processor.
 /// These get modified based on the result of arithmetic and logical instructions.
 #[derive(Default)]
-struct Flags {
+pub struct Flags {
     /// Zero: set if the result is 0
     pub Z: bool,
     /// Sign: set if the result is negative
@@ -61,7 +63,7 @@ struct Flags {
 
 /// General-purpose registers.
 #[derive(Default)]
-struct RegisterBank {
+pub struct RegisterBank {
     a: u8,
     b: u8,
     c: u8,

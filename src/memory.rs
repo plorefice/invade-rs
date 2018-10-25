@@ -6,6 +6,15 @@ pub struct MemoryMap {
 }
 
 impl MemoryMap {
+    /// Create a new memory map
+    pub fn new() -> MemoryMap {
+        MemoryMap {
+            rom: [0; 0x2000],
+            wram: [0; 0x0400],
+            vram: [0; 0x1C00],
+        }
+    }
+
     /// Read an u8 from the requested address in memory.
     pub fn load_u8(&self, addr: u16) -> u8 {
         self.decode(addr)[0]

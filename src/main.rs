@@ -7,6 +7,7 @@ extern crate serde_json;
 mod cpu;
 mod isa;
 mod memory;
+mod opcodes;
 
 use isa::*;
 
@@ -17,11 +18,24 @@ use std::io::{self, Read};
 fn main() {
     let args = env::args().collect::<Vec<_>>();
 
-    let mut f = File::open(&args[1]).expect("could not open ISA file");
-    let isa = ISA::load(&mut f).expect("could not load ISA description");
     let rom = load_rom(&args[2]).expect("could not load ROM file");
 
-    disassemble(&rom, &isa).unwrap();
+    // Load ISA description
+    let mut isa_f = File::open(&args[1]).expect("could not open ISA file");
+    let isa = ISA::load(&mut isa_f).expect("could not load ISA description");
+
+    // Allocate memory and load rom into it
+    let mut memmap = memory::MemoryMap::new();
+    for (i, &b) in rom.iter().enumerate() {
+        memmap.store_u8(i as u16, b)
+    }
+
+    // Create processor and start executing
+    let mut cpu = cpu::CPU::new(isa, memmap);
+
+    loop {
+        cpu.step()
+    }
 }
 
 fn load_rom(fname: &str) -> Result<Vec<u8>, io::Error> {
