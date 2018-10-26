@@ -196,6 +196,10 @@ impl CPU {
         }
     }
 
+    pub fn disassemble(&self, pc: u16) -> Result<String, String> {
+        self.isa.disassemble(pc, &self.mem)
+    }
+
     pub fn step(&mut self) -> Result<(), Box<Error>> {
         let opcode = self.mem.load_u8(self.pc);
         let instr = self

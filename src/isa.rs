@@ -43,6 +43,26 @@ impl ISA {
 
         Some(Instruction { opcode, data })
     }
+
+    /// Disassemble and format a single instruction at the program counter.
+    pub fn disassemble(&self, pc: u16, memmap: &MemoryMap) -> Result<String, String> {
+        let opcode = memmap.load_u8(pc);
+        let instr = self.decode(opcode, pc, memmap).ok_or("invalid opcode")?;
+        let desc = self.get_description(opcode).ok_or("invalid opcode")?;
+        let size = desc.size;
+
+        Ok(format!(
+            "{:04x}  {:<8}  {}",
+            pc,
+            (pc..pc + size as u16)
+                .collect::<Vec<_>>()
+                .iter()
+                .map(|&loc| format!("{:02x}", memmap.load_u8(loc)))
+                .collect::<Vec<_>>()
+                .join(" "),
+            instr.format(self, false).unwrap(),
+        ))
+    }
 }
 
 /// A self-contained description of an instruction, including its human-readable

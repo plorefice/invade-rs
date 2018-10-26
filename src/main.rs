@@ -1,71 +1,64 @@
+#![feature(range_contains)]
+
+extern crate clap;
+extern crate serde;
 #[macro_use]
 extern crate serde_derive;
-
-extern crate serde;
 extern crate serde_json;
+extern crate termion;
+extern crate tui;
 
 mod cpu;
 mod isa;
 mod memory;
+mod ui;
 
+use std::error::Error;
+use std::fs::File;
+
+use clap::Arg;
 use isa::*;
 
-use std::env;
-use std::fs::File;
-use std::io::{self, Read};
-
-fn main() {
-    let args = env::args().collect::<Vec<_>>();
-
-    let rom = load_rom(&args[2]).expect("could not load ROM file");
+fn main() -> Result<(), Box<Error>> {
+    let matches = clap::App::new("invade-rs")
+        .version("0.1")
+        .author("Pietro L. <pietro.lorefice@gmail.com>")
+        .about("Old-school Space Invaders emulator")
+        .arg(
+            Arg::with_name("ISA")
+                .help("ISA description file in JSON format")
+                .required(true)
+                .index(1),
+        )
+        .arg(
+            Arg::with_name("ROM")
+                .help("ROM file")
+                .required(true)
+                .index(2),
+        )
+        .arg(
+            Arg::with_name("v")
+                .short("v")
+                .help("Sets the level of verbosity"),
+        )
+        .get_matches();
 
     // Load ISA description
-    let mut isa_f = File::open(&args[1]).expect("could not open ISA file");
-    let isa = ISA::load(&mut isa_f).expect("could not load ISA description");
+    let mut isa_file =
+        File::open(matches.value_of("ISA").unwrap()).expect("could not open ISA file");
+
+    let isa = ISA::load(&mut isa_file).expect("could not load ISA description");
 
     // Allocate memory and load rom into it
-    let mut memmap = memory::MemoryMap::new();
-    for (i, &b) in rom.iter().enumerate() {
-        memmap.store_u8(i as u16, b)
-    }
+    let mut rom_file =
+        File::open(matches.value_of("ROM").unwrap()).expect("could not load ROM file");
 
-    // Create processor and start executing
-    // let mut cpu = cpu::CPU::new(isa, memmap);
-    // loop {
-    //     cpu.step()
-    // }
+    let mut mem = memory::MemoryMap::new();
+    mem.load_rom(&mut rom_file)
+        .expect("could not read ROM file");
 
-    disassemble(&memmap, &isa).expect("error disassembling");
-}
-
-fn load_rom(fname: &str) -> Result<Vec<u8>, io::Error> {
-    File::open(fname)?.bytes().collect()
-}
-
-fn disassemble(memmap: &memory::MemoryMap, isa: &ISA) -> Result<(), String> {
-    let mut pc = 0;
-
-    // Loop over the rom size
-    while pc < 0x2000 {
-        let opcode = memmap.load_u8(pc);
-        let instr = isa.decode(opcode, pc, memmap).ok_or("invalid opcode")?;
-        let desc = isa.get_description(opcode).ok_or("invalid opcode")?;
-        let size = desc.size;
-
-        println!(
-            "{:04x}  {:<8}  {}",
-            pc,
-            (pc..pc + size as u16)
-                .collect::<Vec<_>>()
-                .iter()
-                .map(|&loc| format!("{:02x}", memmap.load_u8(loc)))
-                .collect::<Vec<_>>()
-                .join(" "),
-            instr.format(isa, false).unwrap(),
-        );
-
-        pc = pc + size as u16;
-    }
-
-    Ok(())
+    // Create and run UI
+    let cpu = cpu::CPU::new(isa, mem);
+    let mut app = ui::App::new(cpu);
+    app.run()
 }

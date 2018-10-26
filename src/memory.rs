@@ -1,3 +1,5 @@
+use std::io::{self, Read};
+
 /// Memory map of the 1978 Space Invaders machine.
 pub struct MemoryMap {
     rom: [u8; 0x2000],
@@ -13,6 +15,11 @@ impl MemoryMap {
             wram: [0; 0x0400],
             vram: [0; 0x1C00],
         }
+    }
+
+    /// Load ROM into memory.
+    pub fn load_rom(&mut self, rd: &mut Read) -> Result<usize, io::Error> {
+        rd.read(&mut self.rom[..])
     }
 
     /// Read an u8 from the requested address in memory.
