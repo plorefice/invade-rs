@@ -1,3 +1,5 @@
+#![feature(nll)]
+#![feature(iterator_flatten)]
 #![feature(range_contains)]
 
 extern crate clap;

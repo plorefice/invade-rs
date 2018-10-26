@@ -32,6 +32,7 @@ pub struct App {
 }
 
 impl App {
+    /// Crreate a new application using an existing CPU.
     pub fn new(cpu: cpu::CPU) -> App {
         App {
             size: Rect::default(),
@@ -40,6 +41,7 @@ impl App {
         }
     }
 
+    /// Run the application main loop and execute the program.
     pub fn run(&mut self) -> Result<(), Box<Error>> {
         // Create terminal backend
         let stdout = io::stdout().into_raw_mode()?;
@@ -64,7 +66,7 @@ impl App {
                     .constraints([Constraint::Percentage(50), Constraint::Percentage(50)].as_ref())
                     .split(self.size);
 
-                self.draw_left_panel(&mut f, chunks[0]);
+                self.draw_disassembly(&mut f, chunks[0]);
                 self.draw_right_panel(&mut f, chunks[1]);
             })?;
 
@@ -79,7 +81,9 @@ impl App {
         Ok(())
     }
 
-    fn draw_left_panel(&mut self, f: &mut Frame<Backend>, area: Rect) {
+    /// Draw the disassembly panel on the left of the GUI.
+    /// The disassembly will also highlight the current instruction.
+    fn draw_disassembly(&mut self, f: &mut Frame<Backend>, area: Rect) {
         let pc = self.cpu.pc;
         let rng = {
             let rng = &mut self.dvs.range;
@@ -127,7 +131,10 @@ impl App {
                 } else {
                     Text::styled(
                         disasm,
-                        Style::default().bg(Color::LightCyan).fg(Color::Black),
+                        Style::default()
+                            .bg(Color::LightCyan)
+                            .fg(Color::Black)
+                            .modifier(Modifier::Bold),
                     )
                 }
             }).collect::<Vec<_>>();
@@ -137,12 +144,140 @@ impl App {
             .block(
                 Block::default()
                     .borders(Borders::ALL)
-                    .title("Footer")
+                    .title("Disassembly")
                     .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold)),
             )
             .wrap(true)
             .render(f, area);
     }
 
-    fn draw_right_panel(&mut self, f: &mut Frame<Backend>, area: Rect) {}
+    /// Draw the right panel of the GUI, which includes the CPU state and a memory view.
+    fn draw_right_panel(&mut self, f: &mut Frame<Backend>, area: Rect) {
+        let chunks = Layout::default()
+            .direction(Direction::Vertical)
+            .constraints([Constraint::Length(11), Constraint::Min(0)].as_ref())
+            .split(area);
+
+        self.draw_cpu_state(f, chunks[0]);
+        self.draw_memory_map(f, chunks[1]);
+    }
+
+    /// Draw the CPU state panel, which includes current register and flag values.
+    fn draw_cpu_state(&mut self, f: &mut Frame<Backend>, area: Rect) {
+        let columns = Layout::default()
+            .direction(Direction::Horizontal)
+            .constraints(
+                [
+                    Constraint::Length(22),
+                    Constraint::Length(32),
+                    Constraint::Length(21),
+                ].as_ref(),
+            )
+            .split(area.inner(2));
+
+        // Format 8-bit registers
+        let text_r8 = vec![
+            format_r8("A", self.cpu.regs.A()),
+            format_r8("B", self.cpu.regs.B()),
+            format_r8("C", self.cpu.regs.C()),
+            format_r8("D", self.cpu.regs.D()),
+            format_r8("E", self.cpu.regs.E()),
+            format_r8("H", self.cpu.regs.H()),
+            format_r8("L", self.cpu.regs.L()),
+        ].into_iter()
+            .flat_map(|mut v| {
+                v.push(Text::raw("\n"));
+                v
+            })
+            .collect::<Vec<_>>();
+
+        // Format 16-bit registers
+        let text_r16 = vec![
+            format_r16("BC", self.cpu.regs.BC()),
+            format_r16("DE", self.cpu.regs.DE()),
+            format_r16("HL", self.cpu.regs.HL()),
+            vec![Text::raw("")], // separator
+            format_r16("SP", self.cpu.sp),
+            vec![Text::raw("")], // separator
+            format_r16("PC", self.cpu.pc),
+        ].into_iter()
+            .flat_map(|mut v| {
+                v.push(Text::raw("\n"));
+                v
+            })
+            .collect::<Vec<_>>();
+
+        // Format CPU flags
+        let text_flags = format_flags(&self.cpu.flags);
+
+        // Draw border around widget
+        Block::default()
+            .borders(Borders::ALL)
+            .title("CPU")
+            .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold))
+            .render(f, area);
+
+        // Draw registers
+        Paragraph::new(text_r8.iter()).render(f, columns[0]);
+        Paragraph::new(text_r16.iter()).render(f, columns[1]);
+        Paragraph::new(text_flags.iter()).render(f, columns[2]);
+    }
+
+    /// Draw the memory view, centered around the recently accessed memory locations.
+    fn draw_memory_map(&mut self, f: &mut Frame<Backend>, area: Rect) {
+        Paragraph::new(vec![].iter())
+            .block(
+                Block::default()
+                    .borders(Borders::ALL)
+                    .title("Memory")
+                    .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold)),
+            )
+            .render(f, area);
+    }
+}
+
+/// Create the formatted text for an 8-bit register.
+fn format_r8(name: &str, val: u8) -> Vec<Text> {
+    let style = Style::default().fg(Color::Magenta).modifier(Modifier::Bold);
+
+    vec![
+        Text::styled(format!("{:<2}: ", name), style),
+        Text::raw(format!("b{:08b} [h{:02x}]", val, val)),
+    ]
+}
+
+/// Create the formatted text for a 16-bit register.
+fn format_r16(name: &str, val: u16) -> Vec<Text> {
+    let style = Style::default().fg(Color::Magenta).modifier(Modifier::Bold);
+
+    vec![
+        Text::styled(format!("{:<2}: ", name), style),
+        Text::raw(format!("b{:016b} [h{:04x}]", val, val)),
+    ]
+}
+
+/// Create the formatted text for the CPU flags
+fn format_flags(flags: &cpu::Flags) -> Vec<Text> {
+    let title_style = Style::default().fg(Color::Magenta).modifier(Modifier::Bold);
+    let off_style = Style::default();
+    let on_style = Style::default()
+        .fg(Color::Black)
+        .bg(Color::LightBlue)
+        .modifier(Modifier::Bold);
+
+    let mut text = Vec::with_capacity(6);
+
+    text.push(Text::styled("Flags: ", title_style));
+    text.extend(
+        [
+            (" S ", flags.S),
+            (" Z ", flags.Z),
+            (" P ", flags.P),
+            (" AC ", flags.AC),
+            (" CY ", flags.CY),
+        ].into_iter()
+            .map(|&(fmt, val)| Text::styled(fmt, if val { on_style } else { off_style })),
+    );
+
+    text
 }
