@@ -10,7 +10,7 @@ use std::ops::Range;
 use termion::event::Key;
 use termion::raw::{IntoRawMode, RawTerminal};
 use tui::backend::TermionBackend;
-use tui::layout::{Constraint, Direction, Layout, Rect};
+use tui::layout::{Alignment, Constraint, Direction, Layout, Rect};
 use tui::style::{Color, Modifier, Style};
 use tui::widgets::{Block, Borders, Paragraph, Text, Widget};
 use tui::{Frame, Terminal};
@@ -63,7 +63,7 @@ impl App {
             terminal.draw(|mut f| {
                 let chunks = Layout::default()
                     .direction(Direction::Horizontal)
-                    .constraints([Constraint::Percentage(50), Constraint::Percentage(50)].as_ref())
+                    .constraints([Constraint::Length(44), Constraint::Min(80)].as_ref())
                     .split(self.size);
 
                 self.draw_disassembly(&mut f, chunks[0]);
@@ -84,6 +84,7 @@ impl App {
     /// Draw the disassembly panel on the left of the GUI.
     /// The disassembly will also highlight the current instruction.
     fn draw_disassembly(&mut self, f: &mut Frame<Backend>, area: Rect) {
+        let inner = area.inner(2);
         let pc = self.cpu.pc;
         let rng = {
             let rng = &mut self.dvs.range;
@@ -91,7 +92,7 @@ impl App {
             // Recompute disassembly range based on PC and current window size
             let lb = pc.checked_sub(5).unwrap_or(0);
             let ub = (pc + 5).min(0x2000);
-            let h = area.inner(1).height;
+            let h = inner.height;
 
             // Adjust visible range so that PC always lies inside, with a bit of context too.
             if (rng.len() as u16) < h {
@@ -137,43 +138,52 @@ impl App {
                             .modifier(Modifier::Bold),
                     )
                 }
+                // TODO: is there any way to avoid this `collect`?
             }).collect::<Vec<_>>();
 
-        // TODO: is there any way to avoid the ::collect() above?
-        Paragraph::new(text.iter())
-            .block(
-                Block::default()
-                    .borders(Borders::ALL)
-                    .title("Disassembly")
-                    .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold)),
-            )
-            .wrap(true)
+        // TODO: PR to add margins to Layout elements?
+        Block::default()
+            .borders(Borders::ALL)
+            .title("Disassembly")
+            .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold))
             .render(f, area);
+
+        Paragraph::new(text.iter()).wrap(true).render(f, inner);
     }
 
     /// Draw the right panel of the GUI, which includes the CPU state and a memory view.
     fn draw_right_panel(&mut self, f: &mut Frame<Backend>, area: Rect) {
         let chunks = Layout::default()
             .direction(Direction::Vertical)
-            .constraints([Constraint::Length(11), Constraint::Min(0)].as_ref())
+            .constraints([Constraint::Length(13), Constraint::Min(0)].as_ref())
             .split(area);
 
-        self.draw_cpu_state(f, chunks[0]);
+        let top = Layout::default()
+            .direction(Direction::Horizontal)
+            .constraints([Constraint::Length(55), Constraint::Min(1)].as_ref())
+            .split(chunks[0]);
+
+        self.draw_cpu_state(f, top[0]);
+        self.draw_stats(f, top[1]);
         self.draw_memory_map(f, chunks[1]);
     }
 
     /// Draw the CPU state panel, which includes current register and flag values.
     fn draw_cpu_state(&mut self, f: &mut Frame<Backend>, area: Rect) {
-        let columns = Layout::default()
-            .direction(Direction::Horizontal)
-            .constraints(
-                [
-                    Constraint::Length(22),
-                    Constraint::Length(32),
-                    Constraint::Length(21),
-                ].as_ref(),
-            )
+        let rows = Layout::default()
+            .direction(Direction::Vertical)
+            .constraints([Constraint::Length(7), Constraint::Min(2)].as_ref())
             .split(area.inner(2));
+
+        let reg_area = Layout::default()
+            .direction(Direction::Horizontal)
+            .constraints([Constraint::Length(22), Constraint::Length(32)].as_ref())
+            .split(rows[0]);
+
+        let flag_area = Rect {
+            y: rows[1].y + 1,
+            ..rows[1]
+        };
 
         // Format 8-bit registers
         let text_r8 = vec![
@@ -218,9 +228,20 @@ impl App {
             .render(f, area);
 
         // Draw registers
-        Paragraph::new(text_r8.iter()).render(f, columns[0]);
-        Paragraph::new(text_r16.iter()).render(f, columns[1]);
-        Paragraph::new(text_flags.iter()).render(f, columns[2]);
+        Paragraph::new(text_r8.iter()).render(f, reg_area[0]);
+        Paragraph::new(text_r16.iter()).render(f, reg_area[1]);
+        Paragraph::new(text_flags.iter())
+            .alignment(Alignment::Center)
+            .render(f, flag_area);
+    }
+
+    // Draw some statistics about the emulator
+    fn draw_stats(&mut self, f: &mut Frame<Backend>, area: Rect) {
+        Block::default()
+            .borders(Borders::ALL)
+            .title("Stats")
+            .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold))
+            .render(f, area);
     }
 
     /// Draw the memory view, centered around the recently accessed memory locations.
@@ -303,7 +324,7 @@ fn format_flags(flags: &cpu::Flags) -> Vec<Text> {
 
     let mut text = Vec::with_capacity(6);
 
-    text.push(Text::styled("Flags: ", title_style));
+    text.push(Text::styled("PSW: ", title_style));
     text.extend(
         [
             (" S ", flags.S),
