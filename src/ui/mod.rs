@@ -225,14 +225,50 @@ impl App {
 
     /// Draw the memory view, centered around the recently accessed memory locations.
     fn draw_memory_map(&mut self, f: &mut Frame<Backend>, area: Rect) {
-        Paragraph::new(vec![].iter())
-            .block(
-                Block::default()
-                    .borders(Borders::ALL)
-                    .title("Memory")
-                    .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold)),
-            )
+        let rows = area.inner(2).height as usize;
+        let cols = f32::powf(
+            2.0,
+            f32::log2(((area.inner(2).width - 9) / 4) as f32).floor(),
+        ) as usize;
+
+        let text = self
+            .cpu
+            .mem
+            .wram
+            .chunks(cols)
+            .take(rows)
+            .enumerate()
+            .map(|(i, line)| {
+                vec![
+                    // Address
+                    Text::raw(format!("{:04x}  ", i * cols)),
+                    // Hex represention of single line
+                    Text::raw(
+                        line.iter()
+                            .map(|&b| format!("{:02x} ", b))
+                            .collect::<Vec<_>>()
+                            .join(""),
+                    ),
+                    // ASCII decoding
+                    Text::raw(" |"),
+                    Text::raw(unsafe {
+                        String::from_utf8_unchecked(
+                            line.iter().map(|&b| format_hex(b)).collect::<Vec<_>>(),
+                        )
+                    }),
+                    Text::raw("|\n"),
+                ]
+            })
+            .flatten()
+            .collect::<Vec<_>>();
+
+        Block::default()
+            .borders(Borders::ALL)
+            .title("Memory")
+            .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold))
             .render(f, area);
+
+        Paragraph::new(text.iter()).render(f, area.inner(2));
     }
 }
 
@@ -280,4 +316,14 @@ fn format_flags(flags: &cpu::Flags) -> Vec<Text> {
     );
 
     text
+}
+
+/// Convert a byte in its ASCII representation if it is a graphical character
+/// or a space, otherwise return a single '.' char.
+fn format_hex(c: u8) -> u8 {
+    if c.is_ascii_graphic() || c == 0x20 {
+        c
+    } else {
+        b'.'
+    }
 }

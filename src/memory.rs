@@ -2,9 +2,9 @@ use std::io::{self, Read};
 
 /// Memory map of the 1978 Space Invaders machine.
 pub struct MemoryMap {
-    rom: [u8; 0x2000],
-    wram: [u8; 0x0400],
-    vram: [u8; 0x1C00],
+    pub rom: [u8; 0x2000],
+    pub wram: [u8; 0x0400],
+    pub vram: [u8; 0x1C00],
 }
 
 impl MemoryMap {
