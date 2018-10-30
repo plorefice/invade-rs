@@ -22,14 +22,14 @@ nonary_op = { ret }
 operand = { reg16 | flag | reg8 | mem | imm | ASCII_DIGIT }
 
 
-stmt = { assignment | condition | expression }
+stmt = { assignment | condition | expression | empty }
+    empty      = { "" }
 	assignment = { operand ~ "<-" ~ expression }
     condition  = { "if" ~ expression ~ "," ~ stmt }
     expression = { nonary | unary | binary }
     	nonary = { nonary_op }
-        unary  = { unary_op ~ term }
-        binary = { term ~ (binary_op ~ term)* }
-        term   = { operand | "(" ~ expression ~ ")" }
+        unary  = { unary_op ~ operand }
+        binary = { operand ~ (binary_op ~ operand)* }
 
 logic = { SOI ~ stmt ~ (";" ~ stmt)* ~ ";"? ~ EOI }
 

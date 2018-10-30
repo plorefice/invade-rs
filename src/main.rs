@@ -24,7 +24,6 @@ use std::fs::File;
 
 use clap::Arg;
 use isa::*;
-use pest::Parser;
 
 fn main() -> Result<(), Box<Error>> {
     let matches = clap::App::new("invade-rs")

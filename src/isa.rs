@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::error::Error;
 use std::io::Read;
 
+use logic::{self, Logic};
 use memory::MemoryMap;
 
 use serde::{Deserialize, Deserializer};
@@ -60,7 +61,7 @@ impl ISA {
                 .map(|&loc| format!("{:02x}", memmap.load_u8(loc)))
                 .collect::<Vec<_>>()
                 .join(" "),
-            instr.format(self, false).unwrap(),
+            instr.format(self).unwrap(),
         ))
     }
 }
@@ -75,7 +76,8 @@ pub struct OpcodeDescription {
     pub size: usize,
     pub operands: Vec<OperandType>,
     pub flags: String,
-    pub logic: String,
+    #[serde(deserialize_with = "from_logic")]
+    pub logic: Logic,
 }
 
 /// Convert a string representing an hexadecimal integer (eg. "0x42") into
@@ -89,6 +91,17 @@ where
 
     let s: String = Deserialize::deserialize(deserializer)?;
     u8::from_str_radix(&s[2..], 16).map_err(D::Error::custom)
+}
+
+/// Convert a string representing instruction logic into its AST representation.
+fn from_logic<'de, D>(deserializer: D) -> Result<Logic, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    use serde::de::Error;
+
+    let s: String = Deserialize::deserialize(deserializer)?;
+    logic::parse_str(&s).map_err(D::Error::custom)
 }
 
 /// A possible operand type for an instruction. In the 8080 architecture,
@@ -112,10 +125,10 @@ pub struct Instruction {
 
 impl Instruction {
     /// Format a disassembled instruction in a human-readable format.
-    pub fn format(&self, isa: &ISA, verbose: bool) -> Result<String, Box<Error>> {
+    pub fn format(&self, isa: &ISA) -> Result<String, Box<Error>> {
         let desc = isa.get_description(self.opcode).ok_or("invalid opcode")?;
 
-        let mut formatted = format!(
+        Ok(format!(
             "{:<8}{:<16}",
             &desc.name,
             &desc
@@ -128,13 +141,6 @@ impl Instruction {
                 })
                 .collect::<Vec<_>>()
                 .join(", ")
-        );
-
-        if verbose {
-            formatted.push_str("; ");
-            formatted.push_str(&desc.logic);
-        }
-
-        Ok(formatted)
+        ))
     }
 }
