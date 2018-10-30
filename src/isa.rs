@@ -75,7 +75,7 @@ pub struct OpcodeDescription {
     pub size: usize,
     pub operands: Vec<OperandType>,
     pub flags: String,
-    pub notes: String,
+    pub logic: String,
 }
 
 /// Convert a string representing an hexadecimal integer (eg. "0x42") into
@@ -132,7 +132,7 @@ impl Instruction {
 
         if verbose {
             formatted.push_str("; ");
-            formatted.push_str(&desc.notes);
+            formatted.push_str(&desc.logic);
         }
 
         Ok(formatted)

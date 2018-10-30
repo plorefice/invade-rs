@@ -3,6 +3,9 @@
 #![feature(range_contains)]
 
 extern crate clap;
+extern crate pest;
+#[macro_use]
+extern crate pest_derive;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
@@ -12,6 +15,7 @@ extern crate tui;
 
 mod cpu;
 mod isa;
+mod logic;
 mod memory;
 mod ui;
 
@@ -20,6 +24,7 @@ use std::fs::File;
 
 use clap::Arg;
 use isa::*;
+use pest::Parser;
 
 fn main() -> Result<(), Box<Error>> {
     let matches = clap::App::new("invade-rs")
