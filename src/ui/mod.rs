@@ -22,6 +22,8 @@ struct DisassemblyViewState {
     dasm: Vec<String>,
     // Disassembly lines now in scope
     range: Range<u16>,
+    // Style of the current instruction line
+    hl_style: Style,
 }
 
 pub struct App {
@@ -47,6 +49,10 @@ impl App {
                     })
                     .collect::<Vec<_>>(),
                 range: 0..0,
+                hl_style: Style::default()
+                    .bg(Color::LightCyan)
+                    .fg(Color::Black)
+                    .modifier(Modifier::Bold),
             },
             cpu,
         }
@@ -140,13 +146,7 @@ impl App {
                 if line != pc {
                     Text::raw(asm)
                 } else {
-                    Text::styled(
-                        asm,
-                        Style::default()
-                            .bg(Color::LightCyan)
-                            .fg(Color::Black)
-                            .modifier(Modifier::Bold),
-                    )
+                    Text::styled(asm, self.dvs.hl_style)
                 }
             }).collect::<Vec<_>>();
 
