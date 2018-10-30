@@ -18,6 +18,8 @@ use tui::{Frame, Terminal};
 type Backend = TermionBackend<RawTerminal<io::Stdout>>;
 
 struct DisassemblyViewState {
+    // Disassembly output
+    dasm: Vec<String>,
     // Disassembly lines now in scope
     range: Range<u16>,
 }
@@ -36,7 +38,16 @@ impl App {
     pub fn new(cpu: cpu::CPU) -> App {
         App {
             size: Rect::default(),
-            dvs: DisassemblyViewState { range: 0..0 },
+            dvs: DisassemblyViewState {
+                dasm: (0..0x2000)
+                    .map(|pc| {
+                        let mut s = cpu.disassemble(pc).unwrap();
+                        s.push('\n');
+                        s
+                    })
+                    .collect::<Vec<_>>(),
+                range: 0..0,
+            },
             cpu,
         }
     }
@@ -124,21 +135,19 @@ impl App {
         // Create disassembly
         let text =
             rng.map(|line| {
-                let mut disasm = self.cpu.disassemble(line).unwrap();
-                disasm.push('\n');
+                let asm = &self.dvs.dasm[line as usize];
 
                 if line != pc {
-                    Text::raw(disasm)
+                    Text::raw(asm)
                 } else {
                     Text::styled(
-                        disasm,
+                        asm,
                         Style::default()
                             .bg(Color::LightCyan)
                             .fg(Color::Black)
                             .modifier(Modifier::Bold),
                     )
                 }
-                // TODO: is there any way to avoid this `collect`?
             }).collect::<Vec<_>>();
 
         // TODO: PR to add margins to Layout elements?
