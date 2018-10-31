@@ -12,6 +12,7 @@ extern crate tui;
 
 mod cpu;
 mod isa;
+mod logic;
 mod memory;
 mod ui;
 

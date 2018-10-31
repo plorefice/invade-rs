@@ -1,0 +1,104 @@
+use logic::ast::*;
+use std::str::FromStr;
+
+grammar;
+
+pub Logic: Vec<Box<Statement>> = {
+    <v:(<Stmt> ";")*> <e:Stmt?> => match e {
+        None    => v,
+        Some(e) => {
+            let mut v = v;
+            v.push(e);
+            v
+        }
+    }
+}
+
+Stmt: Box<Statement> = {
+    <Operand> "<-" <Expr>  => Box::new(Statement::Assignment(<>)),
+    Expr                   => Box::new(Statement::Expression(<>)),
+    "if" <Expr> "," <Stmt> => Box::new(Statement::Conditional(<>)),
+    "special"              => Box::new(Statement::Special),
+    ""                     => Box::new(Statement::Empty),
+}
+
+Expr: Box<Expression> = {
+    Operand               => Box::new(Expression::Operand(<>)),
+    Operand BinaryOp Expr => Box::new(Expression::Binary(<>)),
+    UnaryOp Operand       => Box::new(Expression::Unary(<>)),
+    NonaryOp              => Box::new(Expression::Nonary(<>)),
+}
+
+BinaryOp: BinaryOp = {
+    "+"   => BinaryOp::Add,
+    "-"   => BinaryOp::Sub,
+    "&"   => BinaryOp::And,
+    "|"   => BinaryOp::Or,
+    "^"   => BinaryOp::Xor,
+    "<->" => BinaryOp::Swap,
+    "rlc" => BinaryOp::Rlc,
+    "rrc" => BinaryOp::Rrc,
+    "ral" => BinaryOp::Ral,
+    "rar" => BinaryOp::Rar,
+}
+
+UnaryOp: UnaryOp = {
+    "!"    => UnaryOp::Not,
+    "CALL" => UnaryOp::Call,
+}
+
+NonaryOp: NonaryOp = {
+    "RET" => NonaryOp::Return,
+}
+
+Operand: Operand = {
+    Reg8      => Operand::Reg8(<>),
+    Reg16     => Operand::Reg16(<>),
+    RegSpec   => Operand::SpecialRegister(<>),
+    MemLoc    => Operand::Memory(<>),
+    Flag      => Operand::Flag(<>),
+    "imm"     => Operand::Immediate,
+    "adr"     => Operand::Address,
+    "$" <Num> => Operand::Location(<>),
+    Num       => Operand::Constant(<>),
+}
+
+Reg8: Register8 = {
+    "A"   => Register8::A,
+    "B"   => Register8::B,
+    "C"   => Register8::C,
+    "D"   => Register8::D,
+    "E"   => Register8::E,
+    "L"   => Register8::L,
+    "H"   => Register8::H,
+}
+
+Reg16: Register16 = {
+    "BC"  => Register16::BC,
+    "DE"  => Register16::DE,
+    "HL"  => Register16::HL,
+}
+
+RegSpec: SpecialRegister = {
+    "SP"    => SpecialRegister::SP,
+    "PC"    => SpecialRegister::PC,
+    "PC.lo" => SpecialRegister::PCl,
+    "PC.hi" => SpecialRegister::PCh,
+    "flags" => SpecialRegister::Flags,
+}
+
+Flag: Flag = {
+    "Z"   => Flag::Z,
+    "S"   => Flag::S,
+    "P"   => Flag::P,
+    "CY"  => Flag::CY,
+    "AC"  => Flag::AC,
+}
+
+MemLoc: MemoryLocation = {
+    "(" <Expr> ")" => MemoryLocation(<>),
+}
+
+Num: u16 = {
+    r"[0-9]+" => u16::from_str(<>).unwrap(),
+}
