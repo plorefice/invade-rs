@@ -1,6 +1,7 @@
 [package]
 name = "isagen"
 version = "0.1.0"
+description = "Code generator for 8080 ISA"
 authors = ["Pietro Lorefice <pietro.lorefice@gmail.com>"]
 
 [dependencies]
@@ -9,6 +10,7 @@ clap = "2.32.0"
 lalrpop-util = "0.16.1"
 regex = "0.2.1"
 rustfmt-nightly = "0.99.6"
+sha2 = "0.8.0"
 
 [build-dependencies]
 lalrpop = "0.16.1"

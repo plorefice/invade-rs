@@ -1,22 +1,27 @@
 extern crate clap;
 extern crate rustfmt_nightly as rustfmt;
 extern crate serde_json;
+extern crate sha2;
 
 mod ast;
 mod logic;
 
 use std::fs::File;
 use std::io::{self, Write};
+use std::path::Path;
 
 use clap::Arg;
-use rustfmt::{Config, EmitMode, Input, Session};
+use rustfmt::{Config, EmitMode, Input, Session, Verbosity};
 use serde_json::Value;
+use sha2::{Digest, Sha256};
+
+const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
 fn main() {
-    let matches = clap::App::new("isagen")
-        .version("0.1")
-        .author("Pietro L. <pietro.lorefice@gmail.com>")
-        .about("Code generator for 8080 ISA")
+    let matches = clap::App::new(env!("CARGO_PKG_NAME"))
+        .version(VERSION)
+        .author(env!("CARGO_PKG_AUTHORS"))
+        .about(env!("CARGO_PKG_DESCRIPTION"))
         .arg(
             Arg::with_name("ISA")
                 .help("ISA description file in JSON format")
@@ -31,29 +36,31 @@ fn main() {
         .get_matches();
 
     // Load ISA description
-    let mut isa_file =
-        File::open(matches.value_of("ISA").unwrap()).expect("could not open ISA file");
-
+    let isa_path = matches.value_of("ISA").unwrap();
+    let mut isa_file = File::open(isa_path).expect("could not open ISA file");
     let isa: Value = serde_json::from_reader(&mut isa_file).unwrap();
 
-    // Select output sink
-    let mut out;
-    let mut cfg = Config::default();
-
-    match matches.value_of("OUTPUT") {
-        Some(path) => {
-            out = Box::new(File::create(path).unwrap()) as Box<Write>;
-            cfg.set().emit_mode(EmitMode::Files);
-        }
-        None => {
-            out = Box::new(io::stdout()) as Box<Write>;
-            cfg.set().emit_mode(EmitMode::Stdout);
-        }
+    // Choose output sink
+    let mut out = match matches.value_of("OUTPUT") {
+        Some(path) => Box::new(File::create(path).unwrap()) as Box<Write>,
+        None => Box::new(io::stdout()) as Box<Write>,
     };
 
-    let mut code = vec!["use cpu::CPU;", "use isa::Instruction;", "", "impl CPU {"]
-        .join("\n")
-        .to_string();
+    // Parse ISA and generate code
+    let mut code = vec![
+        format!(
+            "// Auto-generated from \"{}\" using isagen v{}",
+            isa_path, VERSION,
+        )
+        .as_str(),
+        &hash_file(Path::new(isa_path)).unwrap(),
+        "use cpu::CPU;",
+        "use isa::Instruction;",
+        "",
+        "impl CPU {",
+    ]
+    .join("\n")
+    .to_string();
 
     // Generate mega-match for opcode decoding
     code.push_str(&gen_execute());
@@ -78,8 +85,24 @@ fn main() {
     code.push_str("}\n");
 
     // Run rustfmt on the code
+    let mut cfg = Config::default();
+    cfg.set().emit_mode(EmitMode::Stdout);
+    cfg.set().verbose(Verbosity::Quiet);
+
     let mut fmt = Session::new(cfg, Some(&mut out));
     fmt.format(Input::Text(code)).unwrap();
+}
+
+fn hash_file(path: &Path) -> Result<String, io::Error> {
+    let mut f = File::open(path)?;
+    let mut sha_256 = Sha256::new();
+    io::copy(&mut f, &mut sha_256)?;
+
+    let mut hash_str = "// sha256: ".to_owned();
+    for byte in sha_256.result() {
+        hash_str.push_str(&format!("{:x}", byte));
+    }
+    Ok(hash_str)
 }
 
 fn gen_execute() -> String {
