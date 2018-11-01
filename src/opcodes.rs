@@ -3,6 +3,7 @@
 use cpu::CPU;
 use isa::Instruction;
 
+#[allow(non_snake_case, unused_variables, unused_parens)]
 impl CPU {
     pub fn execute(&mut self, instr: &Instruction) {
         match instr.opcode {

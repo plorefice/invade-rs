@@ -38,13 +38,6 @@ impl MemoryMap {
         self.decode_mut(addr)[0] = val;
     }
 
-    /// Write an u16 to the requested address in memory.
-    pub fn store_u16(&mut self, addr: u16, val: u16) {
-        let mem = self.decode_mut(addr);
-        mem[0] = (val & 0xFF) as u8;
-        mem[1] = (val >> 8) as u8;
-    }
-
     fn decode(&self, addr: u16) -> &[u8] {
         match (addr & 0xFF00) >> 8 {
             0x00...0x1F => &self.rom[addr as usize..],
