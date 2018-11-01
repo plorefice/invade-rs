@@ -3,9 +3,15 @@
 use cpu::CPU;
 use isa::Instruction;
 
-#[allow(non_snake_case, unused_variables, unused_parens)]
+#[allow(
+    non_snake_case,
+    unused_variables,
+    unused_parens,
+    unused_mut,
+    unused_assignments
+)]
 impl CPU {
-    pub fn execute(&mut self, instr: &Instruction) {
+    pub fn execute(&mut self, instr: &Instruction) -> u16 {
         match instr.opcode {
             0x00 => self.opc_0x00(instr),
             0x01 => self.opc_0x01(instr),
@@ -267,276 +273,349 @@ impl CPU {
         }
     }
 
-    pub fn opc_0x00(&mut self, instr: &Instruction) {}
+    pub fn opc_0x00(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
+        pc
+    }
 
-    pub fn opc_0x01(&mut self, instr: &Instruction) {
+    pub fn opc_0x01(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "BC <- imm"
         {
             let __0 = instr.data.unwrap();
             self.regs.set_BC(__0 as u16);
         }
+        pc
     }
 
-    pub fn opc_0x02(&mut self, instr: &Instruction) {
+    pub fn opc_0x02(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(BC) <- A"
         {
             let __0 = self.regs.A() as u16;
             let __1 = self.regs.BC();
             self.mem.store_u8(__1, __0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x03(&mut self, instr: &Instruction) {
+    pub fn opc_0x03(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "BC <- BC + 1"
         {
             let __1 = 1;
             let __0 = self.regs.BC() + __1;
             self.regs.set_BC(__0 as u16);
         }
+        pc
     }
 
-    pub fn opc_0x04(&mut self, instr: &Instruction) {
+    pub fn opc_0x04(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "B <- B + 1"
         {
             let __1 = 1;
             let __0 = self.regs.B() as u16 + __1;
             self.regs.set_B(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x05(&mut self, instr: &Instruction) {
+    pub fn opc_0x05(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "B <- B - 1"
         {
             let __1 = 1;
             let __0 = self.regs.B() as u16 - __1;
             self.regs.set_B(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x06(&mut self, instr: &Instruction) {
+    pub fn opc_0x06(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "B <- imm"
         {
             let __0 = instr.data.unwrap();
             self.regs.set_B(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x07(&mut self, instr: &Instruction) {
+    pub fn opc_0x07(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A rlc 1"
         {
             let __1 = 1;
             let __0 = /* TODO: implement me! */ 0;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x08(&mut self, instr: &Instruction) {}
+    pub fn opc_0x08(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
+        pc
+    }
 
-    pub fn opc_0x09(&mut self, instr: &Instruction) {
+    pub fn opc_0x09(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "HL <- HL + BC"
         {
             let __1 = self.regs.BC();
             let __0 = self.regs.HL() + __1;
             self.regs.set_HL(__0 as u16);
         }
+        pc
     }
 
-    pub fn opc_0x0A(&mut self, instr: &Instruction) {
+    pub fn opc_0x0A(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- (BC)"
         {
             let __1 = self.regs.BC();
             let __0 = self.mem.load_u8(__1) as u16;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x0B(&mut self, instr: &Instruction) {
+    pub fn opc_0x0B(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "BC <- BC - 1"
         {
             let __1 = 1;
             let __0 = self.regs.BC() - __1;
             self.regs.set_BC(__0 as u16);
         }
+        pc
     }
 
-    pub fn opc_0x0C(&mut self, instr: &Instruction) {
+    pub fn opc_0x0C(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "C <- C + 1"
         {
             let __1 = 1;
             let __0 = self.regs.C() as u16 + __1;
             self.regs.set_C(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x0D(&mut self, instr: &Instruction) {
+    pub fn opc_0x0D(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "C <- C - 1"
         {
             let __1 = 1;
             let __0 = self.regs.C() as u16 - __1;
             self.regs.set_C(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x0E(&mut self, instr: &Instruction) {
+    pub fn opc_0x0E(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "C <- imm"
         {
             let __0 = instr.data.unwrap();
             self.regs.set_C(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x0F(&mut self, instr: &Instruction) {
+    pub fn opc_0x0F(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A rrc 1"
         {
             let __1 = 1;
             let __0 = /* TODO: implement me! */ 0;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x10(&mut self, instr: &Instruction) {}
+    pub fn opc_0x10(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
+        pc
+    }
 
-    pub fn opc_0x11(&mut self, instr: &Instruction) {
+    pub fn opc_0x11(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "DE <- imm"
         {
             let __0 = instr.data.unwrap();
             self.regs.set_DE(__0 as u16);
         }
+        pc
     }
 
-    pub fn opc_0x12(&mut self, instr: &Instruction) {
+    pub fn opc_0x12(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(DE) <- A"
         {
             let __0 = self.regs.A() as u16;
             let __1 = self.regs.DE();
             self.mem.store_u8(__1, __0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x13(&mut self, instr: &Instruction) {
+    pub fn opc_0x13(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "DE <- DE + 1"
         {
             let __1 = 1;
             let __0 = self.regs.DE() + __1;
             self.regs.set_DE(__0 as u16);
         }
+        pc
     }
 
-    pub fn opc_0x14(&mut self, instr: &Instruction) {
+    pub fn opc_0x14(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "D <- D + 1"
         {
             let __1 = 1;
             let __0 = self.regs.D() as u16 + __1;
             self.regs.set_D(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x15(&mut self, instr: &Instruction) {
+    pub fn opc_0x15(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "D <- D - 1"
         {
             let __1 = 1;
             let __0 = self.regs.D() as u16 - __1;
             self.regs.set_D(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x16(&mut self, instr: &Instruction) {
+    pub fn opc_0x16(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "D <- imm"
         {
             let __0 = instr.data.unwrap();
             self.regs.set_D(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x17(&mut self, instr: &Instruction) {
+    pub fn opc_0x17(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A ral 1"
         {
             let __1 = 1;
             let __0 = /* TODO: implement me! */ 0;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x18(&mut self, instr: &Instruction) {}
+    pub fn opc_0x18(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
+        pc
+    }
 
-    pub fn opc_0x19(&mut self, instr: &Instruction) {
+    pub fn opc_0x19(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "HL <- HL + DE"
         {
             let __1 = self.regs.DE();
             let __0 = self.regs.HL() + __1;
             self.regs.set_HL(__0 as u16);
         }
+        pc
     }
 
-    pub fn opc_0x1A(&mut self, instr: &Instruction) {
+    pub fn opc_0x1A(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- (DE)"
         {
             let __1 = self.regs.DE();
             let __0 = self.mem.load_u8(__1) as u16;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x1B(&mut self, instr: &Instruction) {
+    pub fn opc_0x1B(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "DE <- DE - 1"
         {
             let __1 = 1;
             let __0 = self.regs.DE() - __1;
             self.regs.set_DE(__0 as u16);
         }
+        pc
     }
 
-    pub fn opc_0x1C(&mut self, instr: &Instruction) {
+    pub fn opc_0x1C(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "E <- E + 1"
         {
             let __1 = 1;
             let __0 = self.regs.E() as u16 + __1;
             self.regs.set_E(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x1D(&mut self, instr: &Instruction) {
+    pub fn opc_0x1D(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "E <- E - 1"
         {
             let __1 = 1;
             let __0 = self.regs.E() as u16 - __1;
             self.regs.set_E(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x1E(&mut self, instr: &Instruction) {
+    pub fn opc_0x1E(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "E <- imm"
         {
             let __0 = instr.data.unwrap();
             self.regs.set_E(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x1F(&mut self, instr: &Instruction) {
+    pub fn opc_0x1F(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A rar 1"
         {
             let __1 = 1;
             let __0 = /* TODO: implement me! */ 0;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x20(&mut self, instr: &Instruction) {
+    pub fn opc_0x20(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "special"
         {
             // TODO: implement me
         }
+        pc
     }
 
-    pub fn opc_0x21(&mut self, instr: &Instruction) {
+    pub fn opc_0x21(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "HL <- imm"
         {
             let __0 = instr.data.unwrap();
             self.regs.set_HL(__0 as u16);
         }
+        pc
     }
 
-    pub fn opc_0x22(&mut self, instr: &Instruction) {
+    pub fn opc_0x22(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(adr) <- L"
         {
             let __0 = self.regs.L() as u16;
@@ -550,62 +629,79 @@ impl CPU {
             let __1 = instr.data.unwrap() + __2;
             self.mem.store_u8(__1, __0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x23(&mut self, instr: &Instruction) {
+    pub fn opc_0x23(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "HL <- HL + 1"
         {
             let __1 = 1;
             let __0 = self.regs.HL() + __1;
             self.regs.set_HL(__0 as u16);
         }
+        pc
     }
 
-    pub fn opc_0x24(&mut self, instr: &Instruction) {
+    pub fn opc_0x24(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "H <- H + 1"
         {
             let __1 = 1;
             let __0 = self.regs.H() as u16 + __1;
             self.regs.set_H(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x25(&mut self, instr: &Instruction) {
+    pub fn opc_0x25(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "H <- H - 1"
         {
             let __1 = 1;
             let __0 = self.regs.H() as u16 - __1;
             self.regs.set_H(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x26(&mut self, instr: &Instruction) {
+    pub fn opc_0x26(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "H <- imm"
         {
             let __0 = instr.data.unwrap();
             self.regs.set_H(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x27(&mut self, instr: &Instruction) {
+    pub fn opc_0x27(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "special"
         {
             // TODO: implement me
         }
+        pc
     }
 
-    pub fn opc_0x28(&mut self, instr: &Instruction) {}
+    pub fn opc_0x28(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
+        pc
+    }
 
-    pub fn opc_0x29(&mut self, instr: &Instruction) {
+    pub fn opc_0x29(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "HL <- HL + HL"
         {
             let __1 = self.regs.HL();
             let __0 = self.regs.HL() + __1;
             self.regs.set_HL(__0 as u16);
         }
+        pc
     }
 
-    pub fn opc_0x2A(&mut self, instr: &Instruction) {
+    pub fn opc_0x2A(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "L <- (adr)"
         {
             let __1 = instr.data.unwrap();
@@ -619,85 +715,105 @@ impl CPU {
             let __0 = self.mem.load_u8(__1) as u16;
             self.regs.set_H(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x2B(&mut self, instr: &Instruction) {
+    pub fn opc_0x2B(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "HL <- HL - 1"
         {
             let __1 = 1;
             let __0 = self.regs.HL() - __1;
             self.regs.set_HL(__0 as u16);
         }
+        pc
     }
 
-    pub fn opc_0x2C(&mut self, instr: &Instruction) {
+    pub fn opc_0x2C(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "L <- L + 1"
         {
             let __1 = 1;
             let __0 = self.regs.L() as u16 + __1;
             self.regs.set_L(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x2D(&mut self, instr: &Instruction) {
+    pub fn opc_0x2D(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "L <- L - 1"
         {
             let __1 = 1;
             let __0 = self.regs.L() as u16 - __1;
             self.regs.set_L(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x2E(&mut self, instr: &Instruction) {
+    pub fn opc_0x2E(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "L <- imm"
         {
             let __0 = instr.data.unwrap();
             self.regs.set_L(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x2F(&mut self, instr: &Instruction) {
+    pub fn opc_0x2F(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- !A"
         {
             let __0 = !self.regs.A() as u16;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x30(&mut self, instr: &Instruction) {
+    pub fn opc_0x30(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "special"
         {
             // TODO: implement me
         }
+        pc
     }
 
-    pub fn opc_0x31(&mut self, instr: &Instruction) {
+    pub fn opc_0x31(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "SP <- imm"
         {
             let __0 = instr.data.unwrap();
             self.sp = __0 as u16;
         }
+        pc
     }
 
-    pub fn opc_0x32(&mut self, instr: &Instruction) {
+    pub fn opc_0x32(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(adr) <- A"
         {
             let __0 = self.regs.A() as u16;
             let __1 = instr.data.unwrap();
             self.mem.store_u8(__1, __0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x33(&mut self, instr: &Instruction) {
+    pub fn opc_0x33(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "SP <- SP + 1"
         {
             let __1 = 1;
             let __0 = self.sp + __1;
             self.sp = __0 as u16;
         }
+        pc
     }
 
-    pub fn opc_0x34(&mut self, instr: &Instruction) {
+    pub fn opc_0x34(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(HL) <- (HL) + 1"
         {
             let __1 = 1;
@@ -706,9 +822,11 @@ impl CPU {
             let __3 = self.regs.HL();
             self.mem.store_u8(__3, __0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x35(&mut self, instr: &Instruction) {
+    pub fn opc_0x35(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(HL) <- (HL) - 1"
         {
             let __1 = 1;
@@ -717,668 +835,831 @@ impl CPU {
             let __3 = self.regs.HL();
             self.mem.store_u8(__3, __0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x36(&mut self, instr: &Instruction) {
+    pub fn opc_0x36(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(HL) <- imm"
         {
             let __0 = instr.data.unwrap();
             let __1 = self.regs.HL();
             self.mem.store_u8(__1, __0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x37(&mut self, instr: &Instruction) {
+    pub fn opc_0x37(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "CY <- 1"
         {
             let __0 = 1;
             self.flags.CY = (__0 as u16) != 0;
         }
+        pc
     }
 
-    pub fn opc_0x38(&mut self, instr: &Instruction) {}
+    pub fn opc_0x38(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
+        pc
+    }
 
-    pub fn opc_0x39(&mut self, instr: &Instruction) {
+    pub fn opc_0x39(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "HL <- HL + SP"
         {
             let __1 = self.sp;
             let __0 = self.regs.HL() + __1;
             self.regs.set_HL(__0 as u16);
         }
+        pc
     }
 
-    pub fn opc_0x3A(&mut self, instr: &Instruction) {
+    pub fn opc_0x3A(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- (adr)"
         {
             let __1 = instr.data.unwrap();
             let __0 = self.mem.load_u8(__1) as u16;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x3B(&mut self, instr: &Instruction) {
+    pub fn opc_0x3B(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "SP <- SP - 1"
         {
             let __1 = 1;
             let __0 = self.sp - __1;
             self.sp = __0 as u16;
         }
+        pc
     }
 
-    pub fn opc_0x3C(&mut self, instr: &Instruction) {
+    pub fn opc_0x3C(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + 1"
         {
             let __1 = 1;
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x3D(&mut self, instr: &Instruction) {
+    pub fn opc_0x3D(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - 1"
         {
             let __1 = 1;
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x3E(&mut self, instr: &Instruction) {
+    pub fn opc_0x3E(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- imm"
         {
             let __0 = instr.data.unwrap();
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x3F(&mut self, instr: &Instruction) {
+    pub fn opc_0x3F(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "CY <- !CY"
         {
             let __0 = !self.flags.CY as u16;
             self.flags.CY = (__0 as u16) != 0;
         }
+        pc
     }
 
-    pub fn opc_0x40(&mut self, instr: &Instruction) {
+    pub fn opc_0x40(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "B <- B"
         {
             let __0 = self.regs.B() as u16;
             self.regs.set_B(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x41(&mut self, instr: &Instruction) {
+    pub fn opc_0x41(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "B <- C"
         {
             let __0 = self.regs.C() as u16;
             self.regs.set_B(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x42(&mut self, instr: &Instruction) {
+    pub fn opc_0x42(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "B <- D"
         {
             let __0 = self.regs.D() as u16;
             self.regs.set_B(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x43(&mut self, instr: &Instruction) {
+    pub fn opc_0x43(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "B <- E"
         {
             let __0 = self.regs.E() as u16;
             self.regs.set_B(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x44(&mut self, instr: &Instruction) {
+    pub fn opc_0x44(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "B <- H"
         {
             let __0 = self.regs.H() as u16;
             self.regs.set_B(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x45(&mut self, instr: &Instruction) {
+    pub fn opc_0x45(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "B <- L"
         {
             let __0 = self.regs.L() as u16;
             self.regs.set_B(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x46(&mut self, instr: &Instruction) {
+    pub fn opc_0x46(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "B <- (HL)"
         {
             let __1 = self.regs.HL();
             let __0 = self.mem.load_u8(__1) as u16;
             self.regs.set_B(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x47(&mut self, instr: &Instruction) {
+    pub fn opc_0x47(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "B <- A"
         {
             let __0 = self.regs.A() as u16;
             self.regs.set_B(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x48(&mut self, instr: &Instruction) {
+    pub fn opc_0x48(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "C <- B"
         {
             let __0 = self.regs.B() as u16;
             self.regs.set_C(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x49(&mut self, instr: &Instruction) {
+    pub fn opc_0x49(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "C <- C"
         {
             let __0 = self.regs.C() as u16;
             self.regs.set_C(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x4A(&mut self, instr: &Instruction) {
+    pub fn opc_0x4A(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "C <- D"
         {
             let __0 = self.regs.D() as u16;
             self.regs.set_C(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x4B(&mut self, instr: &Instruction) {
+    pub fn opc_0x4B(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "C <- E"
         {
             let __0 = self.regs.E() as u16;
             self.regs.set_C(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x4C(&mut self, instr: &Instruction) {
+    pub fn opc_0x4C(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "C <- H"
         {
             let __0 = self.regs.H() as u16;
             self.regs.set_C(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x4D(&mut self, instr: &Instruction) {
+    pub fn opc_0x4D(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "C <- L"
         {
             let __0 = self.regs.L() as u16;
             self.regs.set_C(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x4E(&mut self, instr: &Instruction) {
+    pub fn opc_0x4E(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "C <- (HL)"
         {
             let __1 = self.regs.HL();
             let __0 = self.mem.load_u8(__1) as u16;
             self.regs.set_C(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x4F(&mut self, instr: &Instruction) {
+    pub fn opc_0x4F(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "C <- A"
         {
             let __0 = self.regs.A() as u16;
             self.regs.set_C(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x50(&mut self, instr: &Instruction) {
+    pub fn opc_0x50(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "D <- B"
         {
             let __0 = self.regs.B() as u16;
             self.regs.set_D(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x51(&mut self, instr: &Instruction) {
+    pub fn opc_0x51(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "D <- C"
         {
             let __0 = self.regs.C() as u16;
             self.regs.set_D(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x52(&mut self, instr: &Instruction) {
+    pub fn opc_0x52(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "D <- D"
         {
             let __0 = self.regs.D() as u16;
             self.regs.set_D(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x53(&mut self, instr: &Instruction) {
+    pub fn opc_0x53(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "D <- E"
         {
             let __0 = self.regs.E() as u16;
             self.regs.set_D(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x54(&mut self, instr: &Instruction) {
+    pub fn opc_0x54(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "D <- H"
         {
             let __0 = self.regs.H() as u16;
             self.regs.set_D(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x55(&mut self, instr: &Instruction) {
+    pub fn opc_0x55(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "D <- L"
         {
             let __0 = self.regs.L() as u16;
             self.regs.set_D(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x56(&mut self, instr: &Instruction) {
+    pub fn opc_0x56(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "D <- (HL)"
         {
             let __1 = self.regs.HL();
             let __0 = self.mem.load_u8(__1) as u16;
             self.regs.set_D(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x57(&mut self, instr: &Instruction) {
+    pub fn opc_0x57(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "D <- A"
         {
             let __0 = self.regs.A() as u16;
             self.regs.set_D(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x58(&mut self, instr: &Instruction) {
+    pub fn opc_0x58(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "E <- B"
         {
             let __0 = self.regs.B() as u16;
             self.regs.set_E(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x59(&mut self, instr: &Instruction) {
+    pub fn opc_0x59(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "E <- C"
         {
             let __0 = self.regs.C() as u16;
             self.regs.set_E(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x5A(&mut self, instr: &Instruction) {
+    pub fn opc_0x5A(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "E <- D"
         {
             let __0 = self.regs.D() as u16;
             self.regs.set_E(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x5B(&mut self, instr: &Instruction) {
+    pub fn opc_0x5B(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "E <- E"
         {
             let __0 = self.regs.E() as u16;
             self.regs.set_E(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x5C(&mut self, instr: &Instruction) {
+    pub fn opc_0x5C(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "E <- H"
         {
             let __0 = self.regs.H() as u16;
             self.regs.set_E(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x5D(&mut self, instr: &Instruction) {
+    pub fn opc_0x5D(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "E <- L"
         {
             let __0 = self.regs.L() as u16;
             self.regs.set_E(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x5E(&mut self, instr: &Instruction) {
+    pub fn opc_0x5E(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "E <- (HL)"
         {
             let __1 = self.regs.HL();
             let __0 = self.mem.load_u8(__1) as u16;
             self.regs.set_E(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x5F(&mut self, instr: &Instruction) {
+    pub fn opc_0x5F(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "E <- A"
         {
             let __0 = self.regs.A() as u16;
             self.regs.set_E(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x60(&mut self, instr: &Instruction) {
+    pub fn opc_0x60(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "H <- B"
         {
             let __0 = self.regs.B() as u16;
             self.regs.set_H(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x61(&mut self, instr: &Instruction) {
+    pub fn opc_0x61(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "H <- C"
         {
             let __0 = self.regs.C() as u16;
             self.regs.set_H(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x62(&mut self, instr: &Instruction) {
+    pub fn opc_0x62(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "H <- D"
         {
             let __0 = self.regs.D() as u16;
             self.regs.set_H(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x63(&mut self, instr: &Instruction) {
+    pub fn opc_0x63(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "H <- E"
         {
             let __0 = self.regs.E() as u16;
             self.regs.set_H(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x64(&mut self, instr: &Instruction) {
+    pub fn opc_0x64(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "H <- H"
         {
             let __0 = self.regs.H() as u16;
             self.regs.set_H(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x65(&mut self, instr: &Instruction) {
+    pub fn opc_0x65(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "H <- L"
         {
             let __0 = self.regs.L() as u16;
             self.regs.set_H(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x66(&mut self, instr: &Instruction) {
+    pub fn opc_0x66(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "H <- (HL)"
         {
             let __1 = self.regs.HL();
             let __0 = self.mem.load_u8(__1) as u16;
             self.regs.set_H(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x67(&mut self, instr: &Instruction) {
+    pub fn opc_0x67(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "H <- A"
         {
             let __0 = self.regs.A() as u16;
             self.regs.set_H(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x68(&mut self, instr: &Instruction) {
+    pub fn opc_0x68(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "L <- B"
         {
             let __0 = self.regs.B() as u16;
             self.regs.set_L(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x69(&mut self, instr: &Instruction) {
+    pub fn opc_0x69(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "L <- C"
         {
             let __0 = self.regs.C() as u16;
             self.regs.set_L(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x6A(&mut self, instr: &Instruction) {
+    pub fn opc_0x6A(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "L <- D"
         {
             let __0 = self.regs.D() as u16;
             self.regs.set_L(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x6B(&mut self, instr: &Instruction) {
+    pub fn opc_0x6B(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "L <- E"
         {
             let __0 = self.regs.E() as u16;
             self.regs.set_L(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x6C(&mut self, instr: &Instruction) {
+    pub fn opc_0x6C(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "L <- H"
         {
             let __0 = self.regs.H() as u16;
             self.regs.set_L(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x6D(&mut self, instr: &Instruction) {
+    pub fn opc_0x6D(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "L <- L"
         {
             let __0 = self.regs.L() as u16;
             self.regs.set_L(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x6E(&mut self, instr: &Instruction) {
+    pub fn opc_0x6E(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "L <- (HL)"
         {
             let __1 = self.regs.HL();
             let __0 = self.mem.load_u8(__1) as u16;
             self.regs.set_L(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x6F(&mut self, instr: &Instruction) {
+    pub fn opc_0x6F(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "L <- A"
         {
             let __0 = self.regs.A() as u16;
             self.regs.set_L(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x70(&mut self, instr: &Instruction) {
+    pub fn opc_0x70(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(HL) <- B"
         {
             let __0 = self.regs.B() as u16;
             let __1 = self.regs.HL();
             self.mem.store_u8(__1, __0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x71(&mut self, instr: &Instruction) {
+    pub fn opc_0x71(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(HL) <- C"
         {
             let __0 = self.regs.C() as u16;
             let __1 = self.regs.HL();
             self.mem.store_u8(__1, __0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x72(&mut self, instr: &Instruction) {
+    pub fn opc_0x72(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(HL) <- D"
         {
             let __0 = self.regs.D() as u16;
             let __1 = self.regs.HL();
             self.mem.store_u8(__1, __0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x73(&mut self, instr: &Instruction) {
+    pub fn opc_0x73(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(HL) <- E"
         {
             let __0 = self.regs.E() as u16;
             let __1 = self.regs.HL();
             self.mem.store_u8(__1, __0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x74(&mut self, instr: &Instruction) {
+    pub fn opc_0x74(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(HL) <- H"
         {
             let __0 = self.regs.H() as u16;
             let __1 = self.regs.HL();
             self.mem.store_u8(__1, __0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x75(&mut self, instr: &Instruction) {
+    pub fn opc_0x75(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(HL) <- L"
         {
             let __0 = self.regs.L() as u16;
             let __1 = self.regs.HL();
             self.mem.store_u8(__1, __0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x76(&mut self, instr: &Instruction) {
+    pub fn opc_0x76(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "special"
         {
             // TODO: implement me
         }
+        pc
     }
 
-    pub fn opc_0x77(&mut self, instr: &Instruction) {
+    pub fn opc_0x77(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(HL) <- A"
         {
             let __0 = self.regs.A() as u16;
             let __1 = self.regs.HL();
             self.mem.store_u8(__1, __0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x78(&mut self, instr: &Instruction) {
+    pub fn opc_0x78(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- B"
         {
             let __0 = self.regs.B() as u16;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x79(&mut self, instr: &Instruction) {
+    pub fn opc_0x79(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- C"
         {
             let __0 = self.regs.C() as u16;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x7A(&mut self, instr: &Instruction) {
+    pub fn opc_0x7A(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- D"
         {
             let __0 = self.regs.D() as u16;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x7B(&mut self, instr: &Instruction) {
+    pub fn opc_0x7B(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- E"
         {
             let __0 = self.regs.E() as u16;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x7C(&mut self, instr: &Instruction) {
+    pub fn opc_0x7C(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- H"
         {
             let __0 = self.regs.H() as u16;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x7D(&mut self, instr: &Instruction) {
+    pub fn opc_0x7D(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- L"
         {
             let __0 = self.regs.L() as u16;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x7E(&mut self, instr: &Instruction) {
+    pub fn opc_0x7E(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- (HL)"
         {
             let __1 = self.regs.HL();
             let __0 = self.mem.load_u8(__1) as u16;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x7F(&mut self, instr: &Instruction) {
+    pub fn opc_0x7F(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A"
         {
             let __0 = self.regs.A() as u16;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x80(&mut self, instr: &Instruction) {
+    pub fn opc_0x80(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + B"
         {
             let __1 = self.regs.B() as u16;
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x81(&mut self, instr: &Instruction) {
+    pub fn opc_0x81(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + C"
         {
             let __1 = self.regs.C() as u16;
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x82(&mut self, instr: &Instruction) {
+    pub fn opc_0x82(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + D"
         {
             let __1 = self.regs.D() as u16;
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x83(&mut self, instr: &Instruction) {
+    pub fn opc_0x83(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + E"
         {
             let __1 = self.regs.E() as u16;
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x84(&mut self, instr: &Instruction) {
+    pub fn opc_0x84(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + H"
         {
             let __1 = self.regs.H() as u16;
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x85(&mut self, instr: &Instruction) {
+    pub fn opc_0x85(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + L"
         {
             let __1 = self.regs.L() as u16;
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x86(&mut self, instr: &Instruction) {
+    pub fn opc_0x86(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + (HL)"
         {
             let __2 = self.regs.HL();
@@ -1386,18 +1667,22 @@ impl CPU {
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x87(&mut self, instr: &Instruction) {
+    pub fn opc_0x87(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + A"
         {
             let __1 = self.regs.A() as u16;
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x88(&mut self, instr: &Instruction) {
+    pub fn opc_0x88(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + B + CY"
         {
             let __2 = self.flags.CY as u16;
@@ -1405,9 +1690,11 @@ impl CPU {
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x89(&mut self, instr: &Instruction) {
+    pub fn opc_0x89(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + C + CY"
         {
             let __2 = self.flags.CY as u16;
@@ -1415,9 +1702,11 @@ impl CPU {
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x8A(&mut self, instr: &Instruction) {
+    pub fn opc_0x8A(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + D + CY"
         {
             let __2 = self.flags.CY as u16;
@@ -1425,9 +1714,11 @@ impl CPU {
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x8B(&mut self, instr: &Instruction) {
+    pub fn opc_0x8B(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + E + CY"
         {
             let __2 = self.flags.CY as u16;
@@ -1435,9 +1726,11 @@ impl CPU {
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x8C(&mut self, instr: &Instruction) {
+    pub fn opc_0x8C(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + H + CY"
         {
             let __2 = self.flags.CY as u16;
@@ -1445,9 +1738,11 @@ impl CPU {
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x8D(&mut self, instr: &Instruction) {
+    pub fn opc_0x8D(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + L + CY"
         {
             let __2 = self.flags.CY as u16;
@@ -1455,9 +1750,11 @@ impl CPU {
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x8E(&mut self, instr: &Instruction) {
+    pub fn opc_0x8E(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + (HL) + CY"
         {
             let __2 = self.flags.CY as u16;
@@ -1466,9 +1763,11 @@ impl CPU {
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x8F(&mut self, instr: &Instruction) {
+    pub fn opc_0x8F(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + A + CY"
         {
             let __2 = self.flags.CY as u16;
@@ -1476,63 +1775,77 @@ impl CPU {
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x90(&mut self, instr: &Instruction) {
+    pub fn opc_0x90(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - B"
         {
             let __1 = self.regs.B() as u16;
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x91(&mut self, instr: &Instruction) {
+    pub fn opc_0x91(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - C"
         {
             let __1 = self.regs.C() as u16;
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x92(&mut self, instr: &Instruction) {
+    pub fn opc_0x92(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - D"
         {
             let __1 = self.regs.D() as u16;
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x93(&mut self, instr: &Instruction) {
+    pub fn opc_0x93(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - E"
         {
             let __1 = self.regs.E() as u16;
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x94(&mut self, instr: &Instruction) {
+    pub fn opc_0x94(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - H"
         {
             let __1 = self.regs.H() as u16;
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x95(&mut self, instr: &Instruction) {
+    pub fn opc_0x95(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - L"
         {
             let __1 = self.regs.L() as u16;
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x96(&mut self, instr: &Instruction) {
+    pub fn opc_0x96(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - (HL)"
         {
             let __2 = self.regs.HL();
@@ -1540,18 +1853,22 @@ impl CPU {
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x97(&mut self, instr: &Instruction) {
+    pub fn opc_0x97(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - A"
         {
             let __1 = self.regs.A() as u16;
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x98(&mut self, instr: &Instruction) {
+    pub fn opc_0x98(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - B - CY"
         {
             let __2 = self.flags.CY as u16;
@@ -1559,9 +1876,11 @@ impl CPU {
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x99(&mut self, instr: &Instruction) {
+    pub fn opc_0x99(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - C - CY"
         {
             let __2 = self.flags.CY as u16;
@@ -1569,9 +1888,11 @@ impl CPU {
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x9A(&mut self, instr: &Instruction) {
+    pub fn opc_0x9A(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - D - CY"
         {
             let __2 = self.flags.CY as u16;
@@ -1579,9 +1900,11 @@ impl CPU {
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x9B(&mut self, instr: &Instruction) {
+    pub fn opc_0x9B(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - E - CY"
         {
             let __2 = self.flags.CY as u16;
@@ -1589,9 +1912,11 @@ impl CPU {
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x9C(&mut self, instr: &Instruction) {
+    pub fn opc_0x9C(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - H - CY"
         {
             let __2 = self.flags.CY as u16;
@@ -1599,9 +1924,11 @@ impl CPU {
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x9D(&mut self, instr: &Instruction) {
+    pub fn opc_0x9D(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - L - CY"
         {
             let __2 = self.flags.CY as u16;
@@ -1609,9 +1936,11 @@ impl CPU {
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x9E(&mut self, instr: &Instruction) {
+    pub fn opc_0x9E(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - (HL) - CY"
         {
             let __2 = self.flags.CY as u16;
@@ -1620,9 +1949,11 @@ impl CPU {
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0x9F(&mut self, instr: &Instruction) {
+    pub fn opc_0x9F(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - A - CY"
         {
             let __2 = self.flags.CY as u16;
@@ -1630,63 +1961,77 @@ impl CPU {
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xA0(&mut self, instr: &Instruction) {
+    pub fn opc_0xA0(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A & B"
         {
             let __1 = self.regs.B() as u16;
             let __0 = self.regs.A() as u16 & __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xA1(&mut self, instr: &Instruction) {
+    pub fn opc_0xA1(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A & C"
         {
             let __1 = self.regs.C() as u16;
             let __0 = self.regs.A() as u16 & __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xA2(&mut self, instr: &Instruction) {
+    pub fn opc_0xA2(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A & D"
         {
             let __1 = self.regs.D() as u16;
             let __0 = self.regs.A() as u16 & __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xA3(&mut self, instr: &Instruction) {
+    pub fn opc_0xA3(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A & E"
         {
             let __1 = self.regs.E() as u16;
             let __0 = self.regs.A() as u16 & __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xA4(&mut self, instr: &Instruction) {
+    pub fn opc_0xA4(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A & H"
         {
             let __1 = self.regs.H() as u16;
             let __0 = self.regs.A() as u16 & __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xA5(&mut self, instr: &Instruction) {
+    pub fn opc_0xA5(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A & L"
         {
             let __1 = self.regs.L() as u16;
             let __0 = self.regs.A() as u16 & __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xA6(&mut self, instr: &Instruction) {
+    pub fn opc_0xA6(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A & (HL)"
         {
             let __2 = self.regs.HL();
@@ -1694,72 +2039,88 @@ impl CPU {
             let __0 = self.regs.A() as u16 & __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xA7(&mut self, instr: &Instruction) {
+    pub fn opc_0xA7(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A & A"
         {
             let __1 = self.regs.A() as u16;
             let __0 = self.regs.A() as u16 & __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xA8(&mut self, instr: &Instruction) {
+    pub fn opc_0xA8(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A ^ B"
         {
             let __1 = self.regs.B() as u16;
             let __0 = self.regs.A() as u16 ^ __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xA9(&mut self, instr: &Instruction) {
+    pub fn opc_0xA9(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A ^ C"
         {
             let __1 = self.regs.C() as u16;
             let __0 = self.regs.A() as u16 ^ __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xAA(&mut self, instr: &Instruction) {
+    pub fn opc_0xAA(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A ^ D"
         {
             let __1 = self.regs.D() as u16;
             let __0 = self.regs.A() as u16 ^ __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xAB(&mut self, instr: &Instruction) {
+    pub fn opc_0xAB(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A ^ E"
         {
             let __1 = self.regs.E() as u16;
             let __0 = self.regs.A() as u16 ^ __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xAC(&mut self, instr: &Instruction) {
+    pub fn opc_0xAC(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A ^ H"
         {
             let __1 = self.regs.H() as u16;
             let __0 = self.regs.A() as u16 ^ __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xAD(&mut self, instr: &Instruction) {
+    pub fn opc_0xAD(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A ^ L"
         {
             let __1 = self.regs.L() as u16;
             let __0 = self.regs.A() as u16 ^ __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xAE(&mut self, instr: &Instruction) {
+    pub fn opc_0xAE(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A ^ (HL)"
         {
             let __2 = self.regs.HL();
@@ -1767,72 +2128,88 @@ impl CPU {
             let __0 = self.regs.A() as u16 ^ __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xAF(&mut self, instr: &Instruction) {
+    pub fn opc_0xAF(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A ^ A"
         {
             let __1 = self.regs.A() as u16;
             let __0 = self.regs.A() as u16 ^ __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xB0(&mut self, instr: &Instruction) {
+    pub fn opc_0xB0(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A | B"
         {
             let __1 = self.regs.B() as u16;
             let __0 = self.regs.A() as u16 | __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xB1(&mut self, instr: &Instruction) {
+    pub fn opc_0xB1(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A | C"
         {
             let __1 = self.regs.C() as u16;
             let __0 = self.regs.A() as u16 | __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xB2(&mut self, instr: &Instruction) {
+    pub fn opc_0xB2(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A | D"
         {
             let __1 = self.regs.D() as u16;
             let __0 = self.regs.A() as u16 | __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xB3(&mut self, instr: &Instruction) {
+    pub fn opc_0xB3(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A | E"
         {
             let __1 = self.regs.E() as u16;
             let __0 = self.regs.A() as u16 | __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xB4(&mut self, instr: &Instruction) {
+    pub fn opc_0xB4(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A | H"
         {
             let __1 = self.regs.H() as u16;
             let __0 = self.regs.A() as u16 | __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xB5(&mut self, instr: &Instruction) {
+    pub fn opc_0xB5(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A | L"
         {
             let __1 = self.regs.L() as u16;
             let __0 = self.regs.A() as u16 | __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xB6(&mut self, instr: &Instruction) {
+    pub fn opc_0xB6(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A | (HL)"
         {
             let __2 = self.regs.HL();
@@ -1840,83 +2217,103 @@ impl CPU {
             let __0 = self.regs.A() as u16 | __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xB7(&mut self, instr: &Instruction) {
+    pub fn opc_0xB7(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A | A"
         {
             let __1 = self.regs.A() as u16;
             let __0 = self.regs.A() as u16 | __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xB8(&mut self, instr: &Instruction) {
+    pub fn opc_0xB8(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A - B"
         {
             let __1 = self.regs.B() as u16;
             let __0 = self.regs.A() as u16 - __1;
         }
+        pc
     }
 
-    pub fn opc_0xB9(&mut self, instr: &Instruction) {
+    pub fn opc_0xB9(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A - C"
         {
             let __1 = self.regs.C() as u16;
             let __0 = self.regs.A() as u16 - __1;
         }
+        pc
     }
 
-    pub fn opc_0xBA(&mut self, instr: &Instruction) {
+    pub fn opc_0xBA(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A - D"
         {
             let __1 = self.regs.D() as u16;
             let __0 = self.regs.A() as u16 - __1;
         }
+        pc
     }
 
-    pub fn opc_0xBB(&mut self, instr: &Instruction) {
+    pub fn opc_0xBB(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A - E"
         {
             let __1 = self.regs.E() as u16;
             let __0 = self.regs.A() as u16 - __1;
         }
+        pc
     }
 
-    pub fn opc_0xBC(&mut self, instr: &Instruction) {
+    pub fn opc_0xBC(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A - H"
         {
             let __1 = self.regs.H() as u16;
             let __0 = self.regs.A() as u16 - __1;
         }
+        pc
     }
 
-    pub fn opc_0xBD(&mut self, instr: &Instruction) {
+    pub fn opc_0xBD(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A - L"
         {
             let __1 = self.regs.L() as u16;
             let __0 = self.regs.A() as u16 - __1;
         }
+        pc
     }
 
-    pub fn opc_0xBE(&mut self, instr: &Instruction) {
+    pub fn opc_0xBE(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A - (HL)"
         {
             let __2 = self.regs.HL();
             let __1 = self.mem.load_u8(__2) as u16;
             let __0 = self.regs.A() as u16 - __1;
         }
+        pc
     }
 
-    pub fn opc_0xBF(&mut self, instr: &Instruction) {
+    pub fn opc_0xBF(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A - A"
         {
             let __1 = self.regs.A() as u16;
             let __0 = self.regs.A() as u16 - __1;
         }
+        pc
     }
 
-    pub fn opc_0xC0(&mut self, instr: &Instruction) {
+    pub fn opc_0xC0(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if !Z, RET"
         {
             let __0 = !self.flags.Z as u16;
@@ -1927,9 +2324,11 @@ impl CPU {
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xC1(&mut self, instr: &Instruction) {
+    pub fn opc_0xC1(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "C <- (SP)"
         {
             let __1 = self.sp;
@@ -1949,9 +2348,11 @@ impl CPU {
             let __0 = self.sp + __1;
             self.sp = __0 as u16;
         }
+        pc
     }
 
-    pub fn opc_0xC2(&mut self, instr: &Instruction) {
+    pub fn opc_0xC2(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if !Z, PC <- adr"
         {
             let __0 = !self.flags.Z as u16;
@@ -1959,21 +2360,25 @@ impl CPU {
                 // Statement: "PC <- adr"
                 {
                     let __0 = instr.data.unwrap();
-                    self.pc = __0 as u16;
+                    pc = __0 as u16;
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xC3(&mut self, instr: &Instruction) {
+    pub fn opc_0xC3(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "PC <- adr"
         {
             let __0 = instr.data.unwrap();
-            self.pc = __0 as u16;
+            pc = __0 as u16;
         }
+        pc
     }
 
-    pub fn opc_0xC4(&mut self, instr: &Instruction) {
+    pub fn opc_0xC4(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if !Z, CALL adr"
         {
             let __0 = !self.flags.Z as u16;
@@ -1987,9 +2392,11 @@ impl CPU {
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xC5(&mut self, instr: &Instruction) {
+    pub fn opc_0xC5(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(SP - 2) <- C"
         {
             let __0 = self.regs.C() as u16;
@@ -2010,18 +2417,22 @@ impl CPU {
             let __0 = self.sp - __1;
             self.sp = __0 as u16;
         }
+        pc
     }
 
-    pub fn opc_0xC6(&mut self, instr: &Instruction) {
+    pub fn opc_0xC6(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + imm"
         {
             let __1 = instr.data.unwrap();
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xC7(&mut self, instr: &Instruction) {
+    pub fn opc_0xC7(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "CALL $0"
         {
             let __0 = self.opc_0xCD(&Instruction {
@@ -2029,9 +2440,11 @@ impl CPU {
                 data: Some(0),
             });
         }
+        pc
     }
 
-    pub fn opc_0xC8(&mut self, instr: &Instruction) {
+    pub fn opc_0xC8(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if Z, RET"
         {
             let __0 = self.flags.Z as u16;
@@ -2042,21 +2455,23 @@ impl CPU {
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xC9(&mut self, instr: &Instruction) {
+    pub fn opc_0xC9(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "PC.lo <- (SP)"
         {
             let __1 = self.sp;
             let __0 = self.mem.load_u8(__1) as u16;
-            self.pc = (self.pc & 0xFF00) | ((__0 as u16) & 0xFF);
+            pc = (pc & 0xFF00) | ((__0 as u16) & 0xFF);
         }
         // Statement: "PC.hi <- (SP + 1)"
         {
             let __2 = 1;
             let __1 = self.sp + __2;
             let __0 = self.mem.load_u8(__1) as u16;
-            self.pc = (self.pc & 0x00FF) | ((__0 as u16) << 8);
+            pc = (pc & 0x00FF) | ((__0 as u16) << 8);
         }
         // Statement: "SP <- SP + 2"
         {
@@ -2064,9 +2479,11 @@ impl CPU {
             let __0 = self.sp + __1;
             self.sp = __0 as u16;
         }
+        pc
     }
 
-    pub fn opc_0xCA(&mut self, instr: &Instruction) {
+    pub fn opc_0xCA(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if Z, PC <- adr"
         {
             let __0 = self.flags.Z as u16;
@@ -2074,15 +2491,20 @@ impl CPU {
                 // Statement: "PC <- adr"
                 {
                     let __0 = instr.data.unwrap();
-                    self.pc = __0 as u16;
+                    pc = __0 as u16;
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xCB(&mut self, instr: &Instruction) {}
+    pub fn opc_0xCB(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
+        pc
+    }
 
-    pub fn opc_0xCC(&mut self, instr: &Instruction) {
+    pub fn opc_0xCC(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if Z, CALL adr"
         {
             let __0 = self.flags.Z as u16;
@@ -2096,19 +2518,21 @@ impl CPU {
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xCD(&mut self, instr: &Instruction) {
+    pub fn opc_0xCD(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(SP - 1) <- PC.hi"
         {
-            let __0 = (self.pc >> 8);
+            let __0 = (pc >> 8);
             let __2 = 1;
             let __1 = self.sp - __2;
             self.mem.store_u8(__1, __0 as u8);
         }
         // Statement: "(SP - 2) <- PC.lo"
         {
-            let __0 = (self.pc & 0xFF);
+            let __0 = (pc & 0xFF);
             let __2 = 2;
             let __1 = self.sp - __2;
             self.mem.store_u8(__1, __0 as u8);
@@ -2122,11 +2546,13 @@ impl CPU {
         // Statement: "PC <- adr"
         {
             let __0 = instr.data.unwrap();
-            self.pc = __0 as u16;
+            pc = __0 as u16;
         }
+        pc
     }
 
-    pub fn opc_0xCE(&mut self, instr: &Instruction) {
+    pub fn opc_0xCE(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A + imm + CY"
         {
             let __2 = self.flags.CY as u16;
@@ -2134,9 +2560,11 @@ impl CPU {
             let __0 = self.regs.A() as u16 + __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xCF(&mut self, instr: &Instruction) {
+    pub fn opc_0xCF(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "CALL $8"
         {
             let __0 = self.opc_0xCD(&Instruction {
@@ -2144,9 +2572,11 @@ impl CPU {
                 data: Some(8),
             });
         }
+        pc
     }
 
-    pub fn opc_0xD0(&mut self, instr: &Instruction) {
+    pub fn opc_0xD0(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if !CY, RET"
         {
             let __0 = !self.flags.CY as u16;
@@ -2157,9 +2587,11 @@ impl CPU {
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xD1(&mut self, instr: &Instruction) {
+    pub fn opc_0xD1(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "E <- (SP)"
         {
             let __1 = self.sp;
@@ -2179,9 +2611,11 @@ impl CPU {
             let __0 = self.sp + __1;
             self.sp = __0 as u16;
         }
+        pc
     }
 
-    pub fn opc_0xD2(&mut self, instr: &Instruction) {
+    pub fn opc_0xD2(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if !CY, PC <- adr"
         {
             let __0 = !self.flags.CY as u16;
@@ -2189,20 +2623,24 @@ impl CPU {
                 // Statement: "PC <- adr"
                 {
                     let __0 = instr.data.unwrap();
-                    self.pc = __0 as u16;
+                    pc = __0 as u16;
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xD3(&mut self, instr: &Instruction) {
+    pub fn opc_0xD3(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "special"
         {
             // TODO: implement me
         }
+        pc
     }
 
-    pub fn opc_0xD4(&mut self, instr: &Instruction) {
+    pub fn opc_0xD4(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if !CY, CALL adr"
         {
             let __0 = !self.flags.CY as u16;
@@ -2216,9 +2654,11 @@ impl CPU {
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xD5(&mut self, instr: &Instruction) {
+    pub fn opc_0xD5(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(SP - 2) <- E"
         {
             let __0 = self.regs.E() as u16;
@@ -2239,18 +2679,22 @@ impl CPU {
             let __0 = self.sp - __1;
             self.sp = __0 as u16;
         }
+        pc
     }
 
-    pub fn opc_0xD6(&mut self, instr: &Instruction) {
+    pub fn opc_0xD6(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - imm"
         {
             let __1 = instr.data.unwrap();
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xD7(&mut self, instr: &Instruction) {
+    pub fn opc_0xD7(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "CALL $10"
         {
             let __0 = self.opc_0xCD(&Instruction {
@@ -2258,9 +2702,11 @@ impl CPU {
                 data: Some(10),
             });
         }
+        pc
     }
 
-    pub fn opc_0xD8(&mut self, instr: &Instruction) {
+    pub fn opc_0xD8(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if CY, RET"
         {
             let __0 = self.flags.CY as u16;
@@ -2271,11 +2717,16 @@ impl CPU {
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xD9(&mut self, instr: &Instruction) {}
+    pub fn opc_0xD9(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
+        pc
+    }
 
-    pub fn opc_0xDA(&mut self, instr: &Instruction) {
+    pub fn opc_0xDA(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if CY, PC <- adr"
         {
             let __0 = self.flags.CY as u16;
@@ -2283,20 +2734,24 @@ impl CPU {
                 // Statement: "PC <- adr"
                 {
                     let __0 = instr.data.unwrap();
-                    self.pc = __0 as u16;
+                    pc = __0 as u16;
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xDB(&mut self, instr: &Instruction) {
+    pub fn opc_0xDB(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "special"
         {
             // TODO: implement me
         }
+        pc
     }
 
-    pub fn opc_0xDC(&mut self, instr: &Instruction) {
+    pub fn opc_0xDC(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if CY, CALL adr"
         {
             let __0 = self.flags.CY as u16;
@@ -2310,11 +2765,16 @@ impl CPU {
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xDD(&mut self, instr: &Instruction) {}
+    pub fn opc_0xDD(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
+        pc
+    }
 
-    pub fn opc_0xDE(&mut self, instr: &Instruction) {
+    pub fn opc_0xDE(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A - imm - CY"
         {
             let __2 = self.flags.CY as u16;
@@ -2322,9 +2782,11 @@ impl CPU {
             let __0 = self.regs.A() as u16 - __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xDF(&mut self, instr: &Instruction) {
+    pub fn opc_0xDF(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "CALL $18"
         {
             let __0 = self.opc_0xCD(&Instruction {
@@ -2332,9 +2794,11 @@ impl CPU {
                 data: Some(18),
             });
         }
+        pc
     }
 
-    pub fn opc_0xE0(&mut self, instr: &Instruction) {
+    pub fn opc_0xE0(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if !P, RET"
         {
             let __0 = !self.flags.P as u16;
@@ -2345,9 +2809,11 @@ impl CPU {
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xE1(&mut self, instr: &Instruction) {
+    pub fn opc_0xE1(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "L <- (SP)"
         {
             let __1 = self.sp;
@@ -2367,9 +2833,11 @@ impl CPU {
             let __0 = self.sp + __1;
             self.sp = __0 as u16;
         }
+        pc
     }
 
-    pub fn opc_0xE2(&mut self, instr: &Instruction) {
+    pub fn opc_0xE2(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if !P, PC <- adr"
         {
             let __0 = !self.flags.P as u16;
@@ -2377,13 +2845,15 @@ impl CPU {
                 // Statement: "PC <- adr"
                 {
                     let __0 = instr.data.unwrap();
-                    self.pc = __0 as u16;
+                    pc = __0 as u16;
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xE3(&mut self, instr: &Instruction) {
+    pub fn opc_0xE3(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "L <-> (SP)"
         {
             let __2 = self.sp;
@@ -2397,9 +2867,11 @@ impl CPU {
             let __1 = self.mem.load_u8(__2) as u16;
             let __0 = /* TODO: implement me! */ 0;
         }
+        pc
     }
 
-    pub fn opc_0xE4(&mut self, instr: &Instruction) {
+    pub fn opc_0xE4(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if !P, CALL adr"
         {
             let __0 = !self.flags.P as u16;
@@ -2413,9 +2885,11 @@ impl CPU {
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xE5(&mut self, instr: &Instruction) {
+    pub fn opc_0xE5(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(SP - 2) <- L"
         {
             let __0 = self.regs.L() as u16;
@@ -2436,18 +2910,22 @@ impl CPU {
             let __0 = self.sp - __1;
             self.sp = __0 as u16;
         }
+        pc
     }
 
-    pub fn opc_0xE6(&mut self, instr: &Instruction) {
+    pub fn opc_0xE6(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A & imm"
         {
             let __1 = instr.data.unwrap();
             let __0 = self.regs.A() as u16 & __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xE7(&mut self, instr: &Instruction) {
+    pub fn opc_0xE7(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "CALL $20"
         {
             let __0 = self.opc_0xCD(&Instruction {
@@ -2455,9 +2933,11 @@ impl CPU {
                 data: Some(20),
             });
         }
+        pc
     }
 
-    pub fn opc_0xE8(&mut self, instr: &Instruction) {
+    pub fn opc_0xE8(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if P, RET"
         {
             let __0 = self.flags.P as u16;
@@ -2468,22 +2948,26 @@ impl CPU {
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xE9(&mut self, instr: &Instruction) {
+    pub fn opc_0xE9(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "PC.hi <- H"
         {
             let __0 = self.regs.H() as u16;
-            self.pc = (self.pc & 0x00FF) | ((__0 as u16) << 8);
+            pc = (pc & 0x00FF) | ((__0 as u16) << 8);
         }
         // Statement: "PC.lo <- L"
         {
             let __0 = self.regs.L() as u16;
-            self.pc = (self.pc & 0xFF00) | ((__0 as u16) & 0xFF);
+            pc = (pc & 0xFF00) | ((__0 as u16) & 0xFF);
         }
+        pc
     }
 
-    pub fn opc_0xEA(&mut self, instr: &Instruction) {
+    pub fn opc_0xEA(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if P, PC <- adr"
         {
             let __0 = self.flags.P as u16;
@@ -2491,13 +2975,15 @@ impl CPU {
                 // Statement: "PC <- adr"
                 {
                     let __0 = instr.data.unwrap();
-                    self.pc = __0 as u16;
+                    pc = __0 as u16;
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xEB(&mut self, instr: &Instruction) {
+    pub fn opc_0xEB(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "H <-> D"
         {
             let __1 = self.regs.D() as u16;
@@ -2508,9 +2994,11 @@ impl CPU {
             let __1 = self.regs.E() as u16;
             let __0 = /* TODO: implement me! */ 0;
         }
+        pc
     }
 
-    pub fn opc_0xEC(&mut self, instr: &Instruction) {
+    pub fn opc_0xEC(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if P, CALL adr"
         {
             let __0 = self.flags.P as u16;
@@ -2524,20 +3012,27 @@ impl CPU {
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xED(&mut self, instr: &Instruction) {}
+    pub fn opc_0xED(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
+        pc
+    }
 
-    pub fn opc_0xEE(&mut self, instr: &Instruction) {
+    pub fn opc_0xEE(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A ^ imm"
         {
             let __1 = instr.data.unwrap();
             let __0 = self.regs.A() as u16 ^ __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xEF(&mut self, instr: &Instruction) {
+    pub fn opc_0xEF(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "CALL $28"
         {
             let __0 = self.opc_0xCD(&Instruction {
@@ -2545,9 +3040,11 @@ impl CPU {
                 data: Some(28),
             });
         }
+        pc
     }
 
-    pub fn opc_0xF0(&mut self, instr: &Instruction) {
+    pub fn opc_0xF0(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if !S, RET"
         {
             let __0 = !self.flags.S as u16;
@@ -2558,9 +3055,11 @@ impl CPU {
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xF1(&mut self, instr: &Instruction) {
+    pub fn opc_0xF1(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "flags <- (SP)"
         {
             let __1 = self.sp;
@@ -2580,9 +3079,11 @@ impl CPU {
             let __0 = self.sp + __1;
             self.sp = __0 as u16;
         }
+        pc
     }
 
-    pub fn opc_0xF2(&mut self, instr: &Instruction) {
+    pub fn opc_0xF2(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if !S, PC <- adr"
         {
             let __0 = !self.flags.S as u16;
@@ -2590,20 +3091,24 @@ impl CPU {
                 // Statement: "PC <- adr"
                 {
                     let __0 = instr.data.unwrap();
-                    self.pc = __0 as u16;
+                    pc = __0 as u16;
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xF3(&mut self, instr: &Instruction) {
+    pub fn opc_0xF3(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "special"
         {
             // TODO: implement me
         }
+        pc
     }
 
-    pub fn opc_0xF4(&mut self, instr: &Instruction) {
+    pub fn opc_0xF4(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if !S, CALL adr"
         {
             let __0 = !self.flags.S as u16;
@@ -2617,9 +3122,11 @@ impl CPU {
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xF5(&mut self, instr: &Instruction) {
+    pub fn opc_0xF5(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "(SP - 2) <- flags"
         {
             let __0 = (self.flags.get() as u16);
@@ -2640,18 +3147,22 @@ impl CPU {
             let __0 = self.sp - __1;
             self.sp = __0 as u16;
         }
+        pc
     }
 
-    pub fn opc_0xF6(&mut self, instr: &Instruction) {
+    pub fn opc_0xF6(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A <- A | imm"
         {
             let __1 = instr.data.unwrap();
             let __0 = self.regs.A() as u16 | __1;
             self.regs.set_A(__0 as u8);
         }
+        pc
     }
 
-    pub fn opc_0xF7(&mut self, instr: &Instruction) {
+    pub fn opc_0xF7(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "CALL $30"
         {
             let __0 = self.opc_0xCD(&Instruction {
@@ -2659,9 +3170,11 @@ impl CPU {
                 data: Some(30),
             });
         }
+        pc
     }
 
-    pub fn opc_0xF8(&mut self, instr: &Instruction) {
+    pub fn opc_0xF8(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if S, RET"
         {
             let __0 = self.flags.S as u16;
@@ -2672,17 +3185,21 @@ impl CPU {
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xF9(&mut self, instr: &Instruction) {
+    pub fn opc_0xF9(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "SP <- HL"
         {
             let __0 = self.regs.HL();
             self.sp = __0 as u16;
         }
+        pc
     }
 
-    pub fn opc_0xFA(&mut self, instr: &Instruction) {
+    pub fn opc_0xFA(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if S, PC <- adr"
         {
             let __0 = self.flags.S as u16;
@@ -2690,20 +3207,24 @@ impl CPU {
                 // Statement: "PC <- adr"
                 {
                     let __0 = instr.data.unwrap();
-                    self.pc = __0 as u16;
+                    pc = __0 as u16;
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xFB(&mut self, instr: &Instruction) {
+    pub fn opc_0xFB(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "special"
         {
             // TODO: implement me
         }
+        pc
     }
 
-    pub fn opc_0xFC(&mut self, instr: &Instruction) {
+    pub fn opc_0xFC(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "if S, CALL adr"
         {
             let __0 = self.flags.S as u16;
@@ -2717,19 +3238,26 @@ impl CPU {
                 }
             }
         }
+        pc
     }
 
-    pub fn opc_0xFD(&mut self, instr: &Instruction) {}
+    pub fn opc_0xFD(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
+        pc
+    }
 
-    pub fn opc_0xFE(&mut self, instr: &Instruction) {
+    pub fn opc_0xFE(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "A - imm"
         {
             let __1 = instr.data.unwrap();
             let __0 = self.regs.A() as u16 - __1;
         }
+        pc
     }
 
-    pub fn opc_0xFF(&mut self, instr: &Instruction) {
+    pub fn opc_0xFF(&mut self, instr: &Instruction) -> u16 {
+        let mut pc = self.pc;
         // Statement: "CALL $38"
         {
             let __0 = self.opc_0xCD(&Instruction {
@@ -2737,5 +3265,6 @@ impl CPU {
                 data: Some(38),
             });
         }
+        pc
     }
 }

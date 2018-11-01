@@ -228,14 +228,19 @@ impl CPU {
             .decode(opcode, self.pc, &self.mem)
             .ok_or("error decoding opcode")?;
 
-        self.execute(&instr);
+        let updated_pc = self.execute(&instr);
 
-        let desc = self
-            .isa
-            .get_description(opcode)
-            .ok_or("error decoding opcode")?;
+        // If this is not a jump instruction, increment PC
+        if updated_pc == self.pc {
+            let desc = self
+                .isa
+                .get_description(opcode)
+                .ok_or("error decoding opcode")?;
 
-        self.pc = self.pc + desc.size as u16;
+            self.pc = self.pc + desc.size as u16;
+        } else {
+            self.pc = updated_pc;
+        }
 
         Ok(())
     }

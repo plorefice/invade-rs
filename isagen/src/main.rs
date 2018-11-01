@@ -57,7 +57,7 @@ fn main() {
         "use cpu::CPU;",
         "use isa::Instruction;",
         "",
-        "#[allow(non_snake_case, unused_variables, unused_parens)]",
+        "#[allow(non_snake_case, unused_variables, unused_parens, unused_mut, unused_assignments)]",
         "impl CPU {",
     ]
     .join("\n")
@@ -108,7 +108,7 @@ fn hash_file(path: &Path) -> Result<String, io::Error> {
 
 fn gen_execute() -> String {
     let mut code = vec![
-        "pub fn execute(&mut self, instr: &Instruction) {".to_string(),
+        "pub fn execute(&mut self, instr: &Instruction) -> u16 {".to_string(),
         "match instr.opcode {".to_string(),
     ];
     code.push(
@@ -126,10 +126,15 @@ where
     T: AsRef<ast::Statement>,
 {
     // Function signature
-    let mut s = format!(
-        "pub fn opc_0x{:02X}(&mut self, instr: &Instruction) {{\n",
-        opcode
-    );
+    let mut s = vec![
+        format!(
+            "pub fn opc_0x{:02X}(&mut self, instr: &Instruction) -> u16 {{\n",
+            opcode
+        )
+        .as_str(),
+        "let mut pc = self.pc;\n",
+    ]
+    .join("\n");
 
     // Generate code for each statement
     s.push_str(
@@ -140,7 +145,7 @@ where
             .join("\n"),
     );
 
-    s.push_str("}\n");
+    s.push_str("pc\n}\n");
     Ok(s)
 }
 
@@ -228,9 +233,9 @@ impl StmtBuilder {
             Reg16(r) => format!("self.regs.{}()", r),
             SpecialRegister(sr) => String::from(match sr {
                 SP => "self.sp",
-                PC => "self.pc",
-                PCh => "(self.pc >> 8)",
-                PCl => "(self.pc & 0xFF)",
+                PC => "pc",
+                PCh => "(pc >> 8)",
+                PCl => "(pc & 0xFF)",
                 Flags => "(self.flags.get() as u16)",
             }),
             Flag(fl) => format!("self.flags.{} as u16", fl),
@@ -294,13 +299,10 @@ impl StmtBuilder {
         use ast::SpecialRegister::*;
 
         self.code.push(match r {
-            PC => format!("self.pc = __{} as u16;", var),
+            PC => format!("pc = __{} as u16;", var),
             SP => format!("self.sp = __{} as u16;", var),
-            PCh => format!("self.pc = (self.pc & 0x00FF) | ((__{} as u16) << 8);", var),
-            PCl => format!(
-                "self.pc = (self.pc & 0xFF00) | ((__{} as u16) & 0xFF);",
-                var
-            ),
+            PCh => format!("pc = (pc & 0x00FF) | ((__{} as u16) << 8);", var),
+            PCl => format!("pc = (pc & 0xFF00) | ((__{} as u16) & 0xFF);", var),
             Flags => format!("self.flags.store(__{} as u8);", var),
         })
     }
