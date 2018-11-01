@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Build in release mode
+cargo build --release
+
+# Run dtrace
+sudo dtrace \
+	-c './target/release/isagen ../res/8080-isa.json' \
+	-o out.stacks \
+	-n 'profile-997 /execname == "isagen"/ { @[ustack(100)] = count(); }'
+
+# Generate and open flamegraph
+stackcollapse.pl out.stacks \
+	| rust-unmangle \
+	| flamegraph.pl > graph.svg
+
+open -a Safari graph.svg
+

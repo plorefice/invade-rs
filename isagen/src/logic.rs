@@ -1,6 +1,6 @@
 // auto-generated: "lalrpop 0.16.1"
-// sha256: eeb5e36c4268ee18a21b94a185ae5a8298e55413297bde46bba8de2157aec66
-use logic::ast::*;
+// sha256: b9f7b6e4073690f552a6655d979fb738c6dafa7bf39de17c9830b9c2d4adda
+use ast::*;
 use std::str::FromStr;
 #[allow(unused_extern_crates)]
 extern crate lalrpop_util as __lalrpop_util;
@@ -9,7 +9,7 @@ extern crate lalrpop_util as __lalrpop_util;
 mod __parse__Logic {
     #![allow(non_snake_case, non_camel_case_types, unused_mut, unused_variables, unused_imports, unused_parens)]
 
-    use logic::ast::*;
+    use ast::*;
     use std::str::FromStr;
     #[allow(unused_extern_crates)]
     extern crate lalrpop_util as __lalrpop_util;
@@ -2467,7 +2467,7 @@ pub use self::__parse__Logic::LogicParser;
 #[cfg_attr(rustfmt, rustfmt_skip)]
 mod __intern_token {
     #![allow(unused_imports)]
-    use logic::ast::*;
+    use ast::*;
     use std::str::FromStr;
     #[allow(unused_extern_crates)]
     extern crate lalrpop_util as __lalrpop_util;

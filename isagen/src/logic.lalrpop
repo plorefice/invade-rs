@@ -1,4 +1,4 @@
-use logic::ast::*;
+use ast::*;
 use std::str::FromStr;
 
 grammar;

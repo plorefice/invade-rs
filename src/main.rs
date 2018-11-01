@@ -1,5 +1,4 @@
 #![feature(nll)]
-#![feature(iterator_flatten)]
 #![feature(range_contains)]
 
 extern crate clap;
@@ -12,8 +11,8 @@ extern crate tui;
 
 mod cpu;
 mod isa;
-mod logic;
 mod memory;
+mod opcodes;
 mod ui;
 
 use std::error::Error;
