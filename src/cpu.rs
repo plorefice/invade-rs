@@ -1,4 +1,4 @@
-use isa::{Instruction, ISA};
+use isa::ISA;
 use memory::MemoryMap;
 
 use std::error::Error;
@@ -24,6 +24,7 @@ pub struct CPU {
 
 /// Internal flag bits (status register) of the processor.
 /// These get modified based on the result of arithmetic and logical instructions.
+#[allow(non_snake_case)]
 #[derive(Default)]
 pub struct Flags {
     /// Zero: set if the result is 0
@@ -39,6 +40,25 @@ pub struct Flags {
 }
 
 impl Flags {
+    pub fn get(&self) -> u8 {
+        ((self.S as u8) << 7)
+            | ((self.Z as u8) << 6)
+            | (0 << 5)
+            | ((self.AC as u8) << 4)
+            | (0 << 3)
+            | ((self.P as u8) << 2)
+            | (1 << 1)
+            | ((self.CY as u8) << 0)
+    }
+
+    pub fn store(&mut self, val: u8) {
+        self.S = (val & 0x80) != 0;
+        self.Z = (val & 0x40) != 0;
+        self.AC = (val & 0x10) != 0;
+        self.P = (val & 0x04) != 0;
+        self.CY = (val & 0x01) != 0;
+    }
+
     pub fn update_arith(&mut self, val: u16) {
         self.Z = (val & 0xFF) == 0x00;
         self.S = (val & 0x80) != 0;
@@ -78,6 +98,7 @@ pub struct RegisterBank {
     l: u8,
 }
 
+#[allow(non_snake_case)]
 impl RegisterBank {
     /// Get the content of the A register.
     pub fn A(&self) -> u8 {
@@ -207,20 +228,7 @@ impl CPU {
             .decode(opcode, self.pc, &self.mem)
             .ok_or("error decoding opcode")?;
 
-        // TODO: find a nicer way to register opcode execution functions
-        match opcode {
-            0x00 => self.opc_0x00(&instr),
-            0x01 => self.opc_0x01(&instr),
-            0x02 => self.opc_0x02(&instr),
-            0x03 => self.opc_0x03(&instr),
-            0x04 => self.opc_0x04(&instr),
-            0x05 => self.opc_0x05(&instr),
-            0x06 => self.opc_0x06(&instr),
-            0x07 => self.opc_0x07(&instr),
-            0x09 => self.opc_0x09(&instr),
-            0x0A => self.opc_0x0A(&instr),
-            _ => self.unimplemented_instruction(),
-        };
+        self.execute(&instr);
 
         let desc = self
             .isa
@@ -230,60 +238,5 @@ impl CPU {
         self.pc = self.pc + desc.size as u16;
 
         Ok(())
-    }
-
-    fn unimplemented_instruction(&mut self) -> ! {
-        panic!("instruction not implemented yet")
-    }
-
-    fn opc_0x00(&mut self, _instr: &Instruction) {
-        // What did you expect? :)
-    }
-
-    fn opc_0x01(&mut self, instr: &Instruction) {
-        let imm = instr.data.unwrap();
-        self.regs.set_BC(imm);
-    }
-
-    fn opc_0x02(&mut self, _instr: &Instruction) {
-        self.mem.store_u8(self.regs.BC(), self.regs.A())
-    }
-
-    fn opc_0x03(&mut self, _instr: &Instruction) {
-        let bc = self.regs.BC();
-        self.regs.set_BC(bc + 1)
-    }
-
-    fn opc_0x04(&mut self, _instr: &Instruction) {
-        let res = self.regs.B() as u16 + 1;
-        self.regs.set_B(res as u8);
-        self.flags.update_arith(res);
-    }
-
-    fn opc_0x05(&mut self, _instr: &Instruction) {
-        let res = self.regs.B() as u16 - 1;
-        self.regs.set_B(res as u8);
-        self.flags.update_arith(res);
-    }
-
-    fn opc_0x06(&mut self, instr: &Instruction) {
-        self.regs.set_B(instr.data.unwrap() as u8);
-    }
-
-    fn opc_0x07(&mut self, _instr: &Instruction) {
-        let a = self.regs.A();
-        self.regs.set_A(a.rotate_left(1));
-        self.flags.update_cy((a as u16) << 1);
-    }
-
-    fn opc_0x09(&mut self, _instr: &Instruction) {
-        let res = self.regs.HL() as u32 + self.regs.BC() as u32;
-        self.regs.set_HL((res & 0xFFFF) as u16);
-        self.flags.update_cy((res >> 8) as u16);
-    }
-
-    fn opc_0x0A(&mut self, _instr: &Instruction) {
-        let bc = self.regs.BC();
-        self.regs.set_A(self.mem.load_u8(bc));
     }
 }
